@@ -26,6 +26,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <Navbar />
           <main className="pb-24 md:pb-8">{children}</main>
+          <Analytics />
           <footer className="text-center text-gray-500 py-8 border-t border-gray-800 mt-12">
             <p>&copy; {new Date().getFullYear()} Josiah Xayavong. All rights reserved.</p>
             <p className="mt-1 text-sm">Built with Next.js and Tailwind CSS.</p>
