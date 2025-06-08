@@ -103,7 +103,7 @@ export default function HomePage() {
       <section className="container mx-auto px-4 py-16 md:py-24 text-center">
         <div className="mb-8">
           <div className="w-48 h-48 mx-auto mb-8 rounded-full border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 overflow-hidden">
-            <img src="/images/profile-photo.jpg" alt="Josiah Xayavong" className="w-full h-full object-cover object-top" />
+            <img src="/images/profile-photo.jpg" alt="Josiah Xayavong" className="w-full h-full object-cover" />
           </div>
         </div>
 
