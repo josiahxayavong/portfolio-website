@@ -45,15 +45,19 @@ export default function HomePage() {
   }
 
   const skills = {
-    technical: [
-      "Data Analysis",
-      "Database Engineering",
-      "Full-stack Web Development",
-      "Systems Development",
-      "Microsoft 365 Suite",
-      "Adobe Creative Cloud Suite",
+    languages: [
+      "Python",
+      "SQL",
+      "JavaScript",
+      "TypeScript",
+      "Java",
+      "C#",
+      "C++",
+      "HTML/CSS",
     ],
-    programming: ["Python", "SQL", "JavaScript", "TypeScript", "Java", "C#", "C++"],
+    frameworks: ["React", "Node.js", "ASP.NET Core", "Git", "MongoDB", "MySQL", "AWS (EC2, S3, IAM)", "REST APIs"],
+    othertools: ["Microsoft 365", "Adobe Creative Cloud", "Visual Studio Code", "Jira", "Postman", "Figma"],
+    methodologies: ["Agile/Scrum", "Waterfall", "CI/CD", "Object-Oriented Programming/Development (OOP)", "MVC Architecture"],
   }
 
   const certifications = [
@@ -61,13 +65,13 @@ export default function HomePage() {
       title: "AWS Academy – Cloud Computing",
       date: "May 2024",
       details:
-        "Earned digital badges for Cloud Foundations, Cloud Architecting, and EC2 virtualization modules through hands-on AWS Academy training.",
+        "Completed modules on EC2 provisioning, IAM roles, VPCs, and cost management through lab-based exercises.",
       icon: Server,
     },
     {
       title: "Carroll County Career and Technology Center – Graphic Design",
       date: "June 2019",
-      details: "Earned certification through hands-on projects involving team collaboration using Adobe Illustrator.",
+      details: "Produced branding projects using Adobe Illustrator and Photoshop, collaborating in small design teams.",
       icon: Palette,
     },
   ]
@@ -79,9 +83,10 @@ export default function HomePage() {
       dates: "Aug. 2024 – Dec. 2024",
       location: "Harrisonburg, VA",
       responsibilities: [
-        "Worked in a scrum environment with a team of 5 to manage and deliver a music lesson scheduling website.",
-        "Presented in-progress work to client at the end of each sprint to update and receive important feedback.",
-        "Collaborated with business owner in weekly meetings to tailor a website for their business needs.",
+        "Engineered a full-stack web application for scheduling and managing music lessons, hosted on AWS.",
+        "Participated in Agile/Scrum development with 5-person team; contributed to sprint planning, retrospectives, and Git-based version control.",
+        "Designed and implemented user-friendly UI/UX based on client feedback; improved onboarding flow resulting in 40% shorter signup time.",
+        "Coordinated with stakeholders to define functional requirements, prioritize features, and demo releases.",
       ],
     },
     {
@@ -90,9 +95,10 @@ export default function HomePage() {
       dates: "Feb. 2021 – May 2024",
       location: "Harrisonburg, VA",
       responsibilities: [
-        "Managed and maintained 60 on-campus delivery robots, resolving technical issues and ensuring smooth operation.",
-        "Led and trained many student employees, mentoring them on job responsibilities and troubleshooting.",
-        "Conducted field repairs and merchant check-ins.",
+        "Administered a fleet of 60 autonomous delivery robots, performing preventative maintenance and diagnosing hardware/software malfunctions using Linux-based diagnostic tools.",
+        "Streamlined robot recovery operations by developing SOPs and toolkits, reducing downtime by 25%.",
+        "Led and trained over 15 new student employees, enhancing technical troubleshooting efficiency and cross-functional coordination.",
+        "Conducted real-time field debugging, sensor calibration, and merchant integration checks to support last-mile delivery infrastructure.",
       ],
     },
   ]
@@ -185,7 +191,7 @@ export default function HomePage() {
         <section id="experience">
           <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
             <Briefcase className="w-8 h-8 mr-3 text-emerald-400" />
-            Professional Experience
+            Experience
           </h2>
           <div className="space-y-8">
             {experiences.map((exp, index) => (
@@ -244,16 +250,16 @@ export default function HomePage() {
         <section id="skills">
           <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
             <Cpu className="w-8 h-8 mr-3 text-emerald-400" />
-            Skills & Expertise
+            Technical Skills
           </h2>
           <Card className="bg-black border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300">
             <CardContent className="pt-6 space-y-6">
               <div>
                 <h3 className="text-lg font-medium text-gray-100 mb-3 flex items-center">
-                  <Code className="w-5 h-5 mr-2 text-emerald-400" /> Technical Skills
+                  <Code className="w-5 h-5 mr-2 text-emerald-400" /> Languages
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {skills.technical.map((skill) => (
+                  {skills.languages.map((skill) => (
                     <Badge
                       key={skill}
                       variant="secondary"
@@ -266,10 +272,42 @@ export default function HomePage() {
               </div>
               <div>
                 <h3 className="text-lg font-medium text-gray-100 mb-3 flex items-center">
-                  <Database className="w-5 h-5 mr-2 text-emerald-400" /> Programming Expertise
+                  <Database className="w-5 h-5 mr-2 text-emerald-400" /> Frameworks & Tools
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  {skills.programming.map((skill) => (
+                  {skills.frameworks.map((skill) => (
+                    <Badge
+                      key={skill}
+                      variant="secondary"
+                      className="bg-black border border-gray-700 text-gray-200 hover:bg-emerald-400 hover:text-black hover:border-emerald-400 transition-colors px-3 py-1 text-sm"
+                    >
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-gray-100 mb-3 flex items-center">
+                  <Database className="w-5 h-5 mr-2 text-emerald-400" /> Other Tools
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {skills.othertools.map((skill) => (
+                    <Badge
+                      key={skill}
+                      variant="secondary"
+                      className="bg-black border border-gray-700 text-gray-200 hover:bg-emerald-400 hover:text-black hover:border-emerald-400 transition-colors px-3 py-1 text-sm"
+                    >
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-gray-100 mb-3 flex items-center">
+                  <Database className="w-5 h-5 mr-2 text-emerald-400" /> Methodologies
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {skills.methodologies.map((skill) => (
                     <Badge
                       key={skill}
                       variant="secondary"
@@ -288,21 +326,23 @@ export default function HomePage() {
         <section id="interests">
           <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
             <Star className="w-8 h-8 mr-3 text-emerald-400" />
-            Interests & Hobbies
+            Project Interests & Hobbies
           </h2>
           <Card className="bg-black border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300">
             <CardContent className="pt-6">
               <div className="flex flex-wrap gap-2">
                 {[
-                  "Reading",
-                  "Hiking",
+                  "Robotics & IoT Development",
+                  "AI/ML Concepts and Autonomous Systems",
+                  "Web Application Architecture",
+                  "Gymnastics",
                   "Soccer",
                   "Basketball",
                   "Lacrosse",
                   "Football",
-                  "Gymnastics",
-                  "Robotics",
-                  "AI Technology",
+                  "Hiking",
+                  "Reading",
+                  "Tech Meetups",
                 ].map((interest) => (
                   <Badge
                     key={interest}
