@@ -332,8 +332,8 @@ export default function HomePage() {
             <CardContent className="pt-6">
               <div className="flex flex-wrap gap-2">
                 {[
-                  "Robotics & IoT Development",
-                  "AI/ML Concepts and Autonomous Systems",
+                  "Robotics",
+                  "AI/ML Concepts",
                   "Web Application Architecture",
                   "Gymnastics",
                   "Soccer",
