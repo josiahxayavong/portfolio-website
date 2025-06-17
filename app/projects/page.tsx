@@ -1,17 +1,24 @@
+// tells Next.js this file should run on the client (needed for useState, animations, and events)
 "use client"
 
+// import useState for toggling the contact form
 import { useState } from "react"
+
+// import custom UI components and icons used in project cards
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Lightbulb, Clock, CheckCircle, Mail } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { ImageGallery } from "@/components/ui/image-gallery"
 import { ContactForm } from "@/components/contact-form"
+
+// import animation utilities from Framer Motion for contact modal
 import { AnimatePresence, motion } from "framer-motion"
 
 export default function ProjectsPage() {
+  // controls visibility of the contact form modal
   const [showContactForm, setShowContactForm] = useState(false)
 
-  // Current projects data
+  // data for currently active/in-progress project(s)
   const currentProjects = [
     {
       title: "BlackJack Pro",
@@ -55,7 +62,7 @@ export default function ProjectsPage() {
     },
   ]
 
-  // Past projects data
+  // data for previously completed project(s)
   const pastProjects = [
     {
       title: "Musical Journeys",
@@ -72,6 +79,7 @@ export default function ProjectsPage() {
       ],
       tags: ["ASP.NET Core", "C#", "SQL Server", "HTML", "CSS", "JavaScript"],
       images: [
+        // images with captions showing app features and structure
         {
           src: "/images/musical-journeys-homepage.png",
           alt: "Musical Journeys Homepage",
@@ -120,6 +128,7 @@ export default function ProjectsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 md:px-6 md:py-12 space-y-12">
+      {/* HERO SECTION: intro with project overview */}
       <section id="projects-hero" className="text-center pt-8">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Projects</h1>
         <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
@@ -128,13 +137,14 @@ export default function ProjectsPage() {
         </p>
       </section>
 
-      {/* Past Projects Section */}
+      {/* PAST PROJECTS Section */}
       <section id="past-projects">
         <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
           <CheckCircle className="w-8 h-8 mr-3 text-emerald-400" />
           Past Projects
         </h2>
 
+        {/* conditionally render each past project */}
         {pastProjects.length > 0 ? (
           <div className="space-y-12">
             {pastProjects.map((project, index) => (
@@ -158,14 +168,15 @@ export default function ProjectsPage() {
                     {project.description}
                   </CardDescription>
                 </CardHeader>
+
                 <CardContent className="space-y-8">
-                  {/* Project Images Gallery */}
+                  {/* project screenshots gallery */}
                   <div>
                     <h4 className="text-lg font-medium text-white mb-4">Project Screenshots</h4>
                     <ImageGallery images={project.images} />
                   </div>
 
-                  {/* Key Features */}
+                  {/* key features as bullet grid */}
                   <div>
                     <h4 className="text-lg font-medium text-white mb-3">Key Features</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -178,7 +189,7 @@ export default function ProjectsPage() {
                     </div>
                   </div>
 
-                  {/* Technical Implementation */}
+                  {/* deeper technical breakdown */}
                   <div>
                     <h4 className="text-lg font-medium text-white mb-3">Technical Implementation</h4>
                     <ul className="space-y-2 text-gray-300">
@@ -191,7 +202,7 @@ export default function ProjectsPage() {
                     </ul>
                   </div>
 
-                  {/* Technologies Used */}
+                  {/* tech tags rendered as badges */}
                   <div>
                     <h4 className="text-lg font-medium text-white mb-3">Technologies Used</h4>
                     <div className="flex flex-wrap gap-2">
@@ -207,7 +218,7 @@ export default function ProjectsPage() {
                     </div>
                   </div>
 
-                  {/* Source Code Notice */}
+                  {/* contact form trigger */}
                   <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
                     <h4 className="text-lg font-medium text-white mb-2 flex items-center">
                       <Mail className="w-5 h-5 mr-2 text-emerald-400" />
@@ -237,13 +248,14 @@ export default function ProjectsPage() {
         )}
       </section>
 
-      {/* Current Projects Section */}
+      {/* CURRENT PROJECTS SECTION (similar layout as past) */}
       <section id="current-projects">
         <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
           <Clock className="w-8 h-8 mr-3 text-emerald-400" />
           Current Projects
         </h2>
 
+        {/* loop through current projects, rendering layout conditionally */}
         {currentProjects.length > 0 ? (
           <div className="space-y-12">
             {currentProjects.map((project, index) => (
@@ -289,6 +301,7 @@ export default function ProjectsPage() {
                   </CardHeader>
                 )}
                 <CardContent className="space-y-8">
+                  {/* optional image gallery */}
                   {project.images && (
                     <div>
                       <h4 className="text-lg font-medium text-white mb-4">Project Screenshots</h4>
@@ -296,6 +309,7 @@ export default function ProjectsPage() {
                     </div>
                   )}
 
+                  {/* optional feature list */}
                   {project.keyFeatures && (
                     <div>
                       <h4 className="text-lg font-medium text-white mb-3">Key Features</h4>
@@ -310,6 +324,7 @@ export default function ProjectsPage() {
                     </div>
                   )}
 
+                  {/* optional technical breakdown */}
                   {project.longDescription && (
                     <div>
                       <h4 className="text-lg font-medium text-white mb-3">Technical Implementation</h4>
@@ -324,6 +339,7 @@ export default function ProjectsPage() {
                     </div>
                   )}
 
+                  {/* tech stack badges */}
                   <div>
                     <h4 className="text-lg font-medium text-white mb-3">Technologies Used</h4>
                     <div className="flex flex-wrap gap-2">
@@ -339,6 +355,7 @@ export default function ProjectsPage() {
                     </div>
                   </div>
 
+                  {/* additional disclaimer for commercial apps */}
                   {project.title === "BlackJack Pro" && (
                     <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300">
                       <h4 className="text-lg font-medium text-white mb-2">Commercial Project Notice</h4>
@@ -362,7 +379,7 @@ export default function ProjectsPage() {
         )}
       </section>
 
-      {/* Contact Form Overlay */}
+      {/* CONTACT FORM OVERLAY - appears when email button is clicked */}
       <AnimatePresence>
         {showContactForm && (
           <motion.div

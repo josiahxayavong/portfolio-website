@@ -1,17 +1,21 @@
+/* load tailwind's base, component, and utility styles */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* set global font stack for consistent rendering */
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* add custom utility class for balanced line wrapping */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
 
+/* define root-level css variables for light mode theme */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -33,12 +37,15 @@ body {
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
+    /* color palette for data visualizations */
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    /* consistent border radius for all components */
     --radius: 0.5rem;
+    /* sidebar theme tokens (used in layouts/navigation) */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -48,6 +55,8 @@ body {
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  /* overrides for dark mode theme */
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -84,6 +93,7 @@ body {
   }
 }
 
+/* apply border color to all elements and use css variables for body styling */
 @layer base {
   * {
     @apply border-border;

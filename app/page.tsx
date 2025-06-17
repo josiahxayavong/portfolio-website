@@ -1,19 +1,36 @@
+/* this tells Next.js that this file must run on the client side.
+it's required because we use browser-specific features like useState, useRef,
+event handlers (e.g., onClick, onMouseMove), and navigator.clipboard.
+without "use client", Next.js would treat this file as a server component and throw errors. */
 "use client"
 
+// importing React types for TypeScript
 import type React from "react"
 
+// importing hooks used in this component
+// useState = stores and updates values between renders
+// useRef = references a DOM element directly (like a heading tag)
 import { useState, useRef } from "react"
+// importing icons for visual elements across the page
 import { Mail, Phone, MapPin, Briefcase, Cpu, Palette, Award, Star, Server, Database, Code, Check } from "lucide-react"
+// importing reusable UI components for consistent layout and styling
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
+// main homepage component
 export default function HomePage() {
+  // tracks if email or phone was just copied
   const [copiedEmail, setCopiedEmail] = useState(false)
   const [copiedPhone, setCopiedPhone] = useState(false)
+  
+  // tracks mouse position over the name element for hover effect
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
+  
+  // reference to the <h1> element for measuring its position
   const nameRef = useRef<HTMLHeadingElement>(null)
 
+  // updates mouse position when hovering over the name element
   const handleMouseMove = (e: React.MouseEvent<HTMLHeadingElement>) => {
     if (nameRef.current) {
       const rect = nameRef.current.getBoundingClientRect()
@@ -25,10 +42,13 @@ export default function HomePage() {
     }
   }
 
+  // disables hover effect when mouse leaves the name element
   const handleMouseLeave = () => {
     setIsHovering(false)
   }
 
+  // copies provided text (email or phone) to clipboard
+  // displays a checkmark for 2 seconds after copy
   const copyToClipboard = async (text: string, type: "email" | "phone") => {
     try {
       await navigator.clipboard.writeText(text)
@@ -44,6 +64,7 @@ export default function HomePage() {
     }
   }
 
+  // skill categories for display in the Skills section
   const skills = {
     languages: [
       "Python",
@@ -55,11 +76,12 @@ export default function HomePage() {
       "C++",
       "HTML/CSS",
     ],
-    frameworks: ["React", "Node.js", "ASP.NET Core", "Git", "MongoDB", "MySQL", "AWS (EC2, S3, IAM)", "REST APIs"],
-    othertools: ["Microsoft 365", "Adobe Creative Cloud", "Visual Studio Code", "Jira", "Postman", "Figma"],
+    frameworks: ["React", "Node.js", "ASP.NET Core", "Git", "MongoDB", "MySQL", "NoSQL", "Apache Hadoop", "AWS (EC2, S3, IAM)", "REST APIs"],
+    othertools: ["Power BI", "Microsoft 365", "Adobe Creative Cloud", "Visual Studio Code", "Jira", "Postman", "Figma"],
     methodologies: ["Agile/Scrum", "Waterfall", "CI/CD", "Object-Oriented Programming/Development (OOP)", "MVC Architecture"],
   }
 
+  // list of certifications to show in the Certifications section
   const certifications = [
     {
       title: "AWS Academy – Cloud Computing",
@@ -76,6 +98,7 @@ export default function HomePage() {
     },
   ]
 
+  // work history for display in the Experience section
   const experiences = [
     {
       company: "Musical Journeys",
@@ -103,9 +126,11 @@ export default function HomePage() {
     },
   ]
 
+  // everything below renders the homepage visually using the data above
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+      {/* HERO SECTION: Includes profile picture, animated name heading, subtitle, and contact buttons */}
+      {/* Contains clipboard copy interaction, hover effects, and a brief intro */}
       <section className="container mx-auto px-4 py-16 md:py-24 text-center">
         <div className="mb-8">
           <div className="w-48 h-48 mx-auto mb-8 rounded-full border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 overflow-hidden">
@@ -166,7 +191,7 @@ export default function HomePage() {
       </section>
 
       <div className="container mx-auto px-4 space-y-16 md:space-y-20">
-        {/* About Me Section */}
+        {/* ABOUT SECTION: Card component showing a brief summary of background, education, and goals */}
         <section id="about">
           <Card className="bg-black border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300">
             <CardHeader>
@@ -187,7 +212,7 @@ export default function HomePage() {
           </Card>
         </section>
 
-        {/* Experience Section */}
+        {/* EXPERIENCE SECTION: Dynamically rendered list of past work experiences with roles and bullet points */}
         <section id="experience">
           <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
             <Briefcase className="w-8 h-8 mr-3 text-emerald-400" />
@@ -217,7 +242,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Certifications Section */}
+        {/* CERTIFICATIONS SECTION: Grid layout showcasing earned certifications with dates and icons */}
         <section id="certifications">
           <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
             <Award className="w-8 h-8 mr-3 text-emerald-400" />
@@ -246,7 +271,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Skills & Expertise Section */}
+        {/* SKILLS SECTION: Badges grouped into categories such as languages, frameworks, tools, and methodologies */}
         <section id="skills">
           <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
             <Cpu className="w-8 h-8 mr-3 text-emerald-400" />
@@ -322,7 +347,7 @@ export default function HomePage() {
           </Card>
         </section>
 
-        {/* Interests Section */}
+        {/* INTERESTS SECTION: Styled badges for hobbies and side interests related to personal and technical growth */}
         <section id="interests">
           <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
             <Star className="w-8 h-8 mr-3 text-emerald-400" />

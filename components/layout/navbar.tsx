@@ -1,17 +1,28 @@
 "use client"
 
+/* import link component and hooks from next */
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+
+/* import react hooks and contact form component */
 import { useState, useEffect } from "react"
 import { Home, Briefcase, GraduationCap, Mail } from "lucide-react"
 import { ContactForm } from "@/components/contact-form"
+
+/* import animation tools */
 import { AnimatePresence, motion } from "framer-motion"
 
 export function Navbar() {
+  // get the current route path
   const pathname = usePathname()
+
+  // track whether the user has scrolled down the page
   const [isScrolled, setIsScrolled] = useState(false)
+
+  // toggle visibility of contact form
   const [showContactForm, setShowContactForm] = useState(false)
 
+  // add scroll listener to show sticky nav after scrolling down
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100)
@@ -21,6 +32,7 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // navigation links for all devices
   const navLinks = [
     { href: "/", label: "Home", icon: Home },
     { href: "/projects", label: "Projects", icon: Briefcase },
@@ -29,9 +41,10 @@ export function Navbar() {
 
   return (
     <>
-      {/* Main Navigation */}
+      {/* main desktop navbar */}
       <header className="bg-black sticky top-0 z-50 transition-all duration-300">
         <nav className="container mx-auto px-4 md:px-6 py-6 flex justify-between items-center">
+          {/* logo and nav links */}
           <div className="flex items-center space-x-8">
             <Link href="/" className="flex items-center">
               <div className="w-12 h-12 border-2 border-white rounded-lg flex items-center justify-center">
@@ -39,6 +52,7 @@ export function Navbar() {
               </div>
             </Link>
 
+            {/* desktop navigation links */}
             <div className="hidden md:flex space-x-8">
               {navLinks.map((link) => (
                 <Link
@@ -54,6 +68,7 @@ export function Navbar() {
             </div>
           </div>
 
+          {/* contact button */}
           <button
             onClick={() => setShowContactForm(true)}
             className="border-2 border-white px-6 py-2 rounded-lg text-white font-medium hover:bg-emerald-400 hover:border-emerald-400 hover:text-black transition-colors duration-300"
@@ -63,7 +78,7 @@ export function Navbar() {
         </nav>
       </header>
 
-      {/* Sticky Navigation (appears on scroll) */}
+      {/* sticky navbar when user scrolls */}
       <div
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
@@ -78,6 +93,7 @@ export function Navbar() {
                 </div>
               </Link>
 
+              {/* nav links with active state indicator */}
               <div className="hidden md:flex space-x-8">
                 {navLinks.map((link) => (
                   <Link
@@ -95,6 +111,7 @@ export function Navbar() {
               </div>
             </div>
 
+            {/* contact button in sticky nav */}
             <button
               onClick={() => setShowContactForm(true)}
               className="border-2 border-black px-6 py-2 rounded-lg text-black font-medium hover:bg-black hover:text-emerald-400 transition-colors duration-300"
@@ -105,7 +122,7 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* mobile nav bar shown at bottom of screen */}
       <div className="md:hidden fixed bottom-4 left-4 right-4 z-50">
         <div className="bg-black border border-gray-700 rounded-2xl p-4">
           <div className="flex justify-around">
@@ -132,7 +149,7 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Contact Form Overlay with Animation */}
+      {/* contact form overlay with framer motion animations */}
       <AnimatePresence>
         {showContactForm && (
           <motion.div

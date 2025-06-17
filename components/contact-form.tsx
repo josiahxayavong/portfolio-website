@@ -1,38 +1,48 @@
 "use client"
 
+// import types and hooks
 import type React from "react"
-
 import { useState } from "react"
+
+// import ui components and icons
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Mail, User, MessageSquare, Send, Check, X, AlertCircle } from "lucide-react"
+
+// import framer motion for animations
 import { motion, AnimatePresence } from "framer-motion"
 
+// props type for contact form to handle closing
 interface ContactFormProps {
   onClose: () => void
 }
 
 export function ContactForm({ onClose }: ContactFormProps) {
+  // form data state
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   })
+
+  // track form submission and error states
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // update input field state on change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }))
-    // Clear error when user starts typing
+    // clear error if user begins editing
     if (error) setError(null)
   }
 
+  // handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
@@ -56,7 +66,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
       setIsSubmitting(false)
       setIsSubmitted(true)
 
-      // Close form after 3 seconds
+      // close form after short delay (3 seconds)
       setTimeout(() => {
         setIsClosing(true)
         setTimeout(() => {
@@ -72,6 +82,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
     }
   }
 
+  // close form instantly
   const handleClose = () => {
     setIsClosing(true)
     setTimeout(() => {
@@ -81,8 +92,10 @@ export function ContactForm({ onClose }: ContactFormProps) {
     }, 300)
   }
 
+  // check if all form fields are filled out
   const isFormValid = formData.name.trim() && formData.email.trim() && formData.message.trim()
 
+  // show success animation if form was submitted
   if (isSubmitted) {
     return (
       <AnimatePresence>
@@ -127,8 +140,10 @@ export function ContactForm({ onClose }: ContactFormProps) {
     )
   }
 
+  // main contact form ui
   return (
     <Card className="bg-black border-2 border-gray-700 relative">
+      {/* close button in top corner */}
       <motion.button
         onClick={handleClose}
         whileHover={{ scale: 1.1, rotate: 90 }}
@@ -146,6 +161,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
         </CardTitle>
       </CardHeader>
       <CardContent>
+        {/* error message if submit fails */}
         {error && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -157,7 +173,9 @@ export function ContactForm({ onClose }: ContactFormProps) {
           </motion.div>
         )}
 
+        {/* contact form fields */}
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* name input */}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
             <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
               <User className="w-4 h-4 inline mr-2" />
@@ -175,6 +193,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
             />
           </motion.div>
 
+          {/* email input */}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
             <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
               <Mail className="w-4 h-4 inline mr-2" />
@@ -192,6 +211,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
             />
           </motion.div>
 
+          {/* message textarea */}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
             <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
               <MessageSquare className="w-4 h-4 inline mr-2" />
@@ -209,6 +229,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
             />
           </motion.div>
 
+          {/* submit button with loading state */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
