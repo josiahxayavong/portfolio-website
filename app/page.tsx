@@ -12,7 +12,7 @@ import type React from "react"
 // useRef = references a DOM element directly (like a heading tag)
 import { useState, useRef } from "react"
 // importing icons for visual elements across the page
-import { Mail, Phone, MapPin, Briefcase, Cpu, Palette, Award, Star, Server, Database, Code, Check } from "lucide-react"
+import { Mail, Phone, MapPin, Briefcase, Cpu, Palette, Award, Star, Server, Database, Code, Check, LinkedIn } from "lucide-react"
 // importing reusable UI components for consistent layout and styling
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -169,6 +169,14 @@ export default function HomePage() {
         </div>
 
         <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-y-3 gap-x-6 text-gray-300">
+          <a
+            href="https://www.linkedin.com/in/josiah-xayavong"
+            target="_blank" // This opens the link in a new tab
+            rel="noopener noreferrer" // Security best practice for new tabs
+            className="flex items-center hover:text-emerald-400 transition-colors cursor-pointer"
+          >
+            <LinkedIn className="w-5 h-5 mr-2" />
+          </a>
           <button
             onClick={() => copyToClipboard("josiahxaya@gmail.com", "email")}
             className="flex items-center hover:text-emerald-400 transition-colors cursor-pointer"
