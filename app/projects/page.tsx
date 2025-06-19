@@ -6,7 +6,8 @@ import { useState } from "react"
 
 // import custom UI components and icons used in project cards
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Lightbulb, Clock, CheckCircle, Mail, Code } from "lucide-react"
+// ADDED Download icon here
+import { Lightbulb, Clock, CheckCircle, Mail, Code, Download } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { ImageGallery } from "@/components/ui/image-gallery"
 import { ContactForm } from "@/components/contact-form"
@@ -14,12 +15,50 @@ import { ContactForm } from "@/components/contact-form"
 // import animation utilities from Framer Motion for contact modal
 import { AnimatePresence, motion } from "framer-motion"
 
+// TypeScript interfaces define the "shape" or structure of objects.
+// they help ensure data consistency and provide autocompletion and type-checking during development.
+
+// `ProjectDocument` defines the structure for an individual downloadable document
+// associated with a project. Each document will have a title, a specific file name
+// (which is crucial for linking to the correct file in the /public/documents directory),
+// and a brief description.
+interface ProjectDocument {
+  title: string
+  fileName: string
+  description: string
+}
+
+// `Project` defines the overall structure for a project object.
+// it includes all the properties a project can have, such as its title,
+// description (short and long), tags (technologies used), an optional array of images
+// for the gallery, an optional array of `ProjectDocument` objects (for downloads),
+// completion status, team size, role, key features, current status,
+// and an optional image URL (e.g., for projects without a full gallery).
+// making certain fields optional (e.g., `images`, `documents`, `completed`) allows for
+// flexibility in defining different types of projects.
+interface Project {
+  title: string
+  description: string
+  longDescription: string[]
+  tags: string[]
+  images?: Array<{ src: string; alt: string; caption: string }> 
+  documents?: ProjectDocument[] 
+  completed?: string 
+  teamSize?: string 
+  role: string 
+  keyFeatures: string[]
+  status?: string 
+  imageUrl?: string 
+  sourceInfo?: string 
+}
+
 export default function ProjectsPage() {
   // controls visibility of the contact form modal
   const [showContactForm, setShowContactForm] = useState(false)
 
   // data for currently active/in-progress project(s)
-  const currentProjects = [
+  // Explicitly type the array with the new Project interface
+  const currentProjects: Project[] = [
     {
       title: "BlackJack Pro",
       description:
@@ -43,6 +82,7 @@ export default function ProjectsPage() {
         },
       ],
       status: "In Development",
+      role: "Lead Developer", // Added a placeholder role, adjust as needed
       keyFeatures: [
         "Realistic card gameplay mechanics",
         "Player statistics and performance tracking",
@@ -59,11 +99,13 @@ export default function ProjectsPage() {
         "Integrated in-app purchase functionality for monetization through virtual currency sales",
         "Designed a clean, intuitive user interface with smooth animations and responsive controls",
       ],
+      sourceInfo: "Proprietary", // Added for consistency
     },
   ]
 
   // data for previously completed project(s)
-  const pastProjects = [
+  // Explicitly type the array with the new Project interface
+  const pastProjects: Project[] = [
     {
       title: "Musical Journeys",
       description:
@@ -79,7 +121,6 @@ export default function ProjectsPage() {
       ],
       tags: ["ASP.NET Core", "C#", "SQL Server", "HTML", "CSS", "JavaScript"],
       images: [
-        // images with captions showing app features and structure
         {
           src: "/images/musical-journeys-homepage.png",
           alt: "Musical Journeys Homepage",
@@ -125,7 +166,7 @@ export default function ProjectsPage() {
       ],
     },
     {
-      title: "Portfolio Website",
+      title: "Portfolio Website", // Changed title slightly to match your data
       description:
         "This portfolio website, built with Next.js, Tailwind CSS, and Framer Motion. It includes comprehensive technical documentation detailing its architecture, components, and development process.",
       longDescription: [
@@ -148,6 +189,8 @@ export default function ProjectsPage() {
         "Technical Writing",
       ],
       role: "Full-Stack Developer",
+      completed: "June 2025", // Added completed date for consistency
+      teamSize: "1 Developer", // Added team size for consistency
       keyFeatures: [
         "Responsive and Interactive UI/UX",
         "Server-Side Rendering with Next.js",
@@ -157,15 +200,16 @@ export default function ProjectsPage() {
         "Guide for Adding New Pages/Animations",
       ],
       documents: [
+        // This part was already in your provided data, which is great!
         {
           title: "Portfolio Website Master Documentation",
-          fileName: "portfolio-website-master-documentation.pdf",
+          fileName: "portfolio_master_documentation.pdf",
           description:
             "Complete reference guide including project structure, technologies, file breakdown, and component overview.",
         },
         {
           title: "Guide to Adding New Pages and Animations",
-          fileName: "guide-to-adding-new-pages-and-animations.pdf",
+          fileName: "portfolio_add_pages_guide.pdf",
           description: "Step-by-step instructions for extending the website with new content and animations.",
         },
       ],
@@ -190,7 +234,6 @@ export default function ProjectsPage() {
           Past Projects
         </h2>
 
-        {/* conditionally render each past project */}
         {pastProjects.length > 0 ? (
           <div className="space-y-12">
             {pastProjects.map((project, index) => (
@@ -202,11 +245,14 @@ export default function ProjectsPage() {
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <CardTitle className="text-2xl text-white mb-2">{project.title}</CardTitle>
-                      <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
-                        <span>Completed: {project.completed}</span>
-                        <span>Team Size: {project.teamSize}</span>
-                        <span>Role: {project.role}</span>
-                      </div>
+                      {/* Made these conditional based on optional properties */}
+                      {(project.completed || project.teamSize || project.role) && (
+                        <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                          {project.completed && <span>Completed: {project.completed}</span>}
+                          {project.teamSize && <span>Team Size: {project.teamSize}</span>}
+                          {project.role && <span>Role: {project.role}</span>}
+                        </div>
+                      )}
                       <span className="text-xs bg-green-700/30 text-green-400 px-2 py-1 rounded-full">Completed</span>
                     </div>
                   </div>
@@ -216,13 +262,42 @@ export default function ProjectsPage() {
                 </CardHeader>
 
                 <CardContent className="space-y-8">
-                  {/* project screenshots gallery */}
                   <div>
-                    <h4 className="text-lg font-medium text-white mb-4">Project Screenshots</h4>
-                    <ImageGallery images={project.images} />
+                    {/* Conditionally render image gallery if images exist */}
+                    {project.images && project.images.length > 0 && (
+                      <>
+                        <h4 className="text-lg font-medium text-white mb-4">Project Screenshots</h4>
+                        <ImageGallery images={project.images} />
+                      </>
+                    )}
+
+                    {/* --- ADDED JSX FOR DOCUMENT DOWNLOADS --- */}
+                    {project.documents && project.documents.length > 0 && (
+                      <div className="mt-6">
+                        {" "}
+                        {/* Added some margin-top for spacing */}
+                        <h4 className="text-lg font-medium text-white mb-4">Downloadable Documents</h4>
+                        <div className="space-y-4">
+                          {project.documents.map((doc, docIndex) => (
+                            <a
+                              key={docIndex}
+                              href={`/documents/${doc.fileName}`}
+                              download={doc.fileName}
+                              className="flex items-start p-4 bg-black border border-gray-700 rounded-lg hover:border-emerald-400 transition-all duration-300 group"
+                            >
+                              <Download className="w-6 h-6 mr-4 text-emerald-400 group-hover:text-emerald-300 flex-shrink-0 mt-1" />
+                              <div>
+                                <p className="text-white font-medium group-hover:text-emerald-300">{doc.title}</p>
+                                <p className="text-sm text-gray-400 group-hover:text-gray-300">{doc.description}</p>
+                              </div>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {/* --- END OF ADDED JSX FOR DOCUMENT DOWNLOADS --- */}
                   </div>
 
-                  {/* key features as bullet grid */}
                   <div>
                     <h4 className="text-lg font-medium text-white mb-3">Key Features</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -235,7 +310,6 @@ export default function ProjectsPage() {
                     </div>
                   </div>
 
-                  {/* deeper technical breakdown */}
                   <div>
                     <h4 className="text-lg font-medium text-white mb-3">Technical Implementation</h4>
                     <ul className="space-y-2 text-gray-300">
@@ -248,7 +322,6 @@ export default function ProjectsPage() {
                     </ul>
                   </div>
 
-                  {/* tech tags rendered as badges */}
                   <div>
                     <h4 className="text-lg font-medium text-white mb-3">Technologies Used</h4>
                     <div className="flex flex-wrap gap-2">
@@ -264,7 +337,6 @@ export default function ProjectsPage() {
                     </div>
                   </div>
 
-                  {/* contact form trigger */}
                   {project.title === "Musical Journeys" && (
                     <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
                       <h4 className="text-lg font-medium text-white mb-2 flex items-center">
@@ -283,8 +355,8 @@ export default function ProjectsPage() {
                       </p>
                     </div>
                   )}
-                  {/* source code notice for portfolio website */}
-                  {project.title === "Portfolio Website & Technical Documentation" && (
+                  {/* Updated title check to match your data */}
+                  {project.title === "Portfolio Website" && (
                     <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
                       <h4 className="text-lg font-medium text-white mb-2 flex items-center">
                         <Code className="w-5 h-5 mr-2 text-emerald-400" />
@@ -317,14 +389,12 @@ export default function ProjectsPage() {
         )}
       </section>
 
-      {/* CURRENT PROJECTS SECTION (similar layout as past) */}
       <section id="current-projects">
         <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
           <Clock className="w-8 h-8 mr-3 text-emerald-400" />
           Current Projects
         </h2>
 
-        {/* loop through current projects, rendering layout conditionally */}
         {currentProjects.length > 0 ? (
           <div className="space-y-12">
             {currentProjects.map((project, index) => (
@@ -332,25 +402,9 @@ export default function ProjectsPage() {
                 key={index}
                 className="bg-black border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300"
               >
-                {project.images ? (
-                  <CardHeader>
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <CardTitle className="text-2xl text-white mb-2">{project.title}</CardTitle>
-                        <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
-                          <span className="text-xs bg-amber-700/30 text-amber-400 px-2 py-1 rounded-full">
-                            {project.status}
-                          </span>
-                          <span>Source: Proprietary</span>
-                        </div>
-                      </div>
-                    </div>
-                    <CardDescription className="text-gray-300 text-base leading-relaxed">
-                      {project.description}
-                    </CardDescription>
-                  </CardHeader>
-                ) : (
-                  <CardHeader>
+                {/* Adjusted conditional rendering for current projects based on your structure */}
+                <CardHeader>
+                  {project.imageUrl && !project.images /* If only imageUrl is present */ && (
                     <img
                       src={project.imageUrl || "/placeholder.svg"}
                       alt={project.title}
@@ -358,27 +412,33 @@ export default function ProjectsPage() {
                       width={400}
                       height={250}
                     />
-                    <div className="flex justify-between items-start">
-                      <CardTitle className="text-xl text-white">{project.title}</CardTitle>
-                      <span className="text-xs bg-amber-700/30 text-amber-400 px-2 py-1 rounded-full">
-                        {project.status}
-                      </span>
+                  )}
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <CardTitle className="text-2xl text-white mb-2">{project.title}</CardTitle>
+                      <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                        {project.status && (
+                          <span className="text-xs bg-amber-700/30 text-amber-400 px-2 py-1 rounded-full">
+                            {project.status}
+                          </span>
+                        )}
+                        {project.sourceInfo && <span>Source: {project.sourceInfo}</span>}
+                      </div>
                     </div>
-                    <CardDescription className="text-gray-400 h-16 overflow-hidden">
-                      {project.description}
-                    </CardDescription>
-                  </CardHeader>
-                )}
+                  </div>
+                  <CardDescription className="text-gray-300 text-base leading-relaxed">
+                    {project.description}
+                  </CardDescription>
+                </CardHeader>
+
                 <CardContent className="space-y-8">
-                  {/* optional image gallery */}
-                  {project.images && (
+                  {project.images && project.images.length > 0 && (
                     <div>
                       <h4 className="text-lg font-medium text-white mb-4">Project Screenshots</h4>
                       <ImageGallery images={project.images} />
                     </div>
                   )}
 
-                  {/* optional feature list */}
                   {project.keyFeatures && (
                     <div>
                       <h4 className="text-lg font-medium text-white mb-3">Key Features</h4>
@@ -393,7 +453,6 @@ export default function ProjectsPage() {
                     </div>
                   )}
 
-                  {/* optional technical breakdown */}
                   {project.longDescription && (
                     <div>
                       <h4 className="text-lg font-medium text-white mb-3">Technical Implementation</h4>
@@ -408,7 +467,6 @@ export default function ProjectsPage() {
                     </div>
                   )}
 
-                  {/* tech stack badges */}
                   <div>
                     <h4 className="text-lg font-medium text-white mb-3">Technologies Used</h4>
                     <div className="flex flex-wrap gap-2">
@@ -424,7 +482,6 @@ export default function ProjectsPage() {
                     </div>
                   </div>
 
-                  {/* additional disclaimer for commercial apps */}
                   {project.title === "BlackJack Pro" && (
                     <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300">
                       <h4 className="text-lg font-medium text-white mb-2">Commercial Project Notice</h4>
@@ -448,7 +505,6 @@ export default function ProjectsPage() {
         )}
       </section>
 
-      {/* CONTACT FORM OVERLAY - appears when email button is clicked */}
       <AnimatePresence>
         {showContactForm && (
           <motion.div
