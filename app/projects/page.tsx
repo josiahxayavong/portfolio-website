@@ -6,7 +6,6 @@ import { useState } from "react"
 
 // import custom UI components and icons used in project cards
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-// ADDED Download icon here
 import { Lightbulb, Clock, CheckCircle, Mail, Code, Download } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { ImageGallery } from "@/components/ui/image-gallery"
@@ -57,7 +56,7 @@ export default function ProjectsPage() {
   const [showContactForm, setShowContactForm] = useState(false)
 
   // data for currently active/in-progress project(s)
-  // Explicitly type the array with the new Project interface
+  // explicitly type the array with the new Project interface
   const currentProjects: Project[] = [
     {
       title: "BlackJack Pro",
@@ -82,7 +81,7 @@ export default function ProjectsPage() {
         },
       ],
       status: "In Development",
-      role: "Lead Developer", // Added a placeholder role, adjust as needed
+      role: "Lead Developer", 
       keyFeatures: [
         "Realistic card gameplay mechanics",
         "Player statistics and performance tracking",
@@ -99,12 +98,12 @@ export default function ProjectsPage() {
         "Integrated in-app purchase functionality for monetization through virtual currency sales",
         "Designed a clean, intuitive user interface with smooth animations and responsive controls",
       ],
-      sourceInfo: "Proprietary", // Added for consistency
+      sourceInfo: "Proprietary",
     },
   ]
 
   // data for previously completed project(s)
-  // Explicitly type the array with the new Project interface
+  // explicitly type the array with the new Project interface
   const pastProjects: Project[] = [
     {
       title: "Musical Journeys",
@@ -166,7 +165,7 @@ export default function ProjectsPage() {
       ],
     },
     {
-      title: "Portfolio Website", // Changed title slightly to match your data
+      title: "Portfolio Website",
       description:
         "This portfolio website, built with Next.js, Tailwind CSS, and Framer Motion. It includes comprehensive technical documentation detailing its architecture, components, and development process.",
       longDescription: [
@@ -189,8 +188,6 @@ export default function ProjectsPage() {
         "Technical Writing",
       ],
       role: "Full-Stack Developer",
-      completed: "June 2025", // Added completed date for consistency
-      teamSize: "1 Developer", // Added team size for consistency
       keyFeatures: [
         "Responsive and Interactive UI/UX",
         "Server-Side Rendering with Next.js",
@@ -200,7 +197,6 @@ export default function ProjectsPage() {
         "Guide for Adding New Pages/Animations",
       ],
       documents: [
-        // This part was already in your provided data, which is great!
         {
           title: "Portfolio Website Master Documentation",
           fileName: "portfolio_master_documentation.pdf",
