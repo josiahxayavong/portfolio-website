@@ -12,7 +12,7 @@ import type React from "react"
 // useRef = references a DOM element directly (like a heading tag)
 import { useState, useRef } from "react"
 // importing icons for visual elements across the page
-import { Mail, Phone, MapPin, Briefcase, Cpu, Palette, Award, Star, Server, Database, Code, Check, Linkedin } from "lucide-react"
+import { Mail, Phone, MapPin, Briefcase, Cpu, Palette, Award, Star, Server, Database, Code, Check, Linkedin, Github } from "lucide-react"
 // importing reusable UI components for consistent layout and styling
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -177,6 +177,15 @@ export default function HomePage() {
             aria-label="View Josiah Xayavong's LinkedIn profile"
           >
             <Linkedin className="w-5 h-5 mr-2" />
+          </a>
+          <a
+            href="https://github.com/josiahxayavong"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center hover:text-emerald-400 transition-colors cursor-pointer"
+            aria-label="View Josiah Xayavong's GitHub profile"
+          >
+            <Github className="w-5 h-5" />
           </a>
           <button
             onClick={() => copyToClipboard("josiahxaya@gmail.com", "email")}

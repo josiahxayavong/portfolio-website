@@ -6,7 +6,7 @@ import { useState } from "react"
 
 // import custom UI components and icons used in project cards
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Lightbulb, Clock, CheckCircle, Mail } from "lucide-react"
+import { Lightbulb, Clock, CheckCircle, Mail, Code } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { ImageGallery } from "@/components/ui/image-gallery"
 import { ContactForm } from "@/components/contact-form"
@@ -124,6 +124,52 @@ export default function ProjectsPage() {
         "Responsive design",
       ],
     },
+    {
+      title: "Portfolio Website",
+      description:
+        "This portfolio website, built with Next.js, Tailwind CSS, and Framer Motion. It includes comprehensive technical documentation detailing its architecture, components, and development process.",
+      longDescription: [
+        "Architected and developed this personal portfolio website to showcase projects, skills, and professional experience.",
+        "Leveraged Next.js (App Router) for optimized routing, server components, and fast performance.",
+        "Styled using Tailwind CSS for a utility-first, responsive design system.",
+        "Incorporated Framer Motion for subtle and engaging animations and page transitions.",
+        "Authored detailed technical documentation covering project structure, key technologies, component-level breakdowns, styling, animations, and deployment.",
+        "Implemented features like a dynamic navigation bar, and an interactive contact form.",
+        "Ensured a modular and scalable codebase with reusable components and utility functions.",
+      ],
+      tags: [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "Framer Motion",
+        "Lucide Icons",
+        "Vercel",
+        "Technical Writing",
+      ],
+      role: "Full-Stack Developer",
+      keyFeatures: [
+        "Responsive and Interactive UI/UX",
+        "Server-Side Rendering with Next.js",
+        "Utility-First Styling with Tailwind CSS",
+        "Smooth Animations via Framer Motion",
+        "Comprehensive Master Documentation",
+        "Guide for Adding New Pages/Animations",
+      ],
+      documents: [
+        {
+          title: "Portfolio Website Master Documentation",
+          fileName: "portfolio-website-master-documentation.pdf",
+          description:
+            "Complete reference guide including project structure, technologies, file breakdown, and component overview.",
+        },
+        {
+          title: "Guide to Adding New Pages and Animations",
+          fileName: "guide-to-adding-new-pages-and-animations.pdf",
+          description: "Step-by-step instructions for extending the website with new content and animations.",
+        },
+      ],
+    },
   ]
 
   return (
@@ -219,22 +265,45 @@ export default function ProjectsPage() {
                   </div>
 
                   {/* contact form trigger */}
-                  <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
-                    <h4 className="text-lg font-medium text-white mb-2 flex items-center">
-                      <Mail className="w-5 h-5 mr-2 text-emerald-400" />
-                      Source Code Access
-                    </h4>
-                    <p className="text-gray-300 text-sm">
-                      Interested in reviewing the source code for this project? Please email me at{" "}
-                      <button
-                        onClick={() => setShowContactForm(true)}
-                        className="text-emerald-400 hover:text-emerald-300 transition-colors underline cursor-pointer"
-                      >
-                        josiahxaya@gmail.com
-                      </button>{" "}
-                      with your request, and I'd be happy to share it for educational or review purposes.
-                    </p>
-                  </div>
+                  {project.title === "Musical Journeys" && (
+                    <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
+                      <h4 className="text-lg font-medium text-white mb-2 flex items-center">
+                        <Mail className="w-5 h-5 mr-2 text-emerald-400" />
+                        Source Code Access
+                      </h4>
+                      <p className="text-gray-300 text-sm">
+                        Interested in reviewing the source code for this project? Please email me at{" "}
+                        <button
+                          onClick={() => setShowContactForm(true)}
+                          className="text-emerald-400 hover:text-emerald-300 transition-colors underline cursor-pointer"
+                        >
+                          josiahxaya@gmail.com
+                        </button>{" "}
+                        with your request, and I'd be happy to share it for educational or review purposes.
+                      </p>
+                    </div>
+                  )}
+                  {/* source code notice for portfolio website */}
+                  {project.title === "Portfolio Website & Technical Documentation" && (
+                    <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
+                      <h4 className="text-lg font-medium text-white mb-2 flex items-center">
+                        <Code className="w-5 h-5 mr-2 text-emerald-400" />
+                        Source Code Access
+                      </h4>
+                      <p className="text-gray-300 text-sm">
+                        The source code for this portfolio is well-annotated and available on my{" "}
+                        <a
+                          href="https://github.com/josiahxayavong/portfolio-website"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-emerald-400 hover:text-emerald-300 transition-colors underline"
+                        >
+                          GitHub
+                        </a>
+                        .
+                      </p>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
