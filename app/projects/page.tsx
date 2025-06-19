@@ -241,7 +241,6 @@ export default function ProjectsPage() {
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <CardTitle className="text-2xl text-white mb-2">{project.title}</CardTitle>
-                      {/* Made these conditional based on optional properties */}
                       {(project.completed || project.teamSize || project.role) && (
                         <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
                           {project.completed && <span>Completed: {project.completed}</span>}
@@ -259,7 +258,7 @@ export default function ProjectsPage() {
 
                 <CardContent className="space-y-8">
                   <div>
-                    {/* Conditionally render image gallery if images exist */}
+                    {/* conditionally render image gallery if images exist */}
                     {project.images && project.images.length > 0 && (
                       <>
                         <h4 className="text-lg font-medium text-white mb-4">Project Screenshots</h4>
@@ -267,11 +266,9 @@ export default function ProjectsPage() {
                       </>
                     )}
 
-                    {/* --- ADDED JSX FOR DOCUMENT DOWNLOADS --- */}
                     {project.documents && project.documents.length > 0 && (
                       <div className="mt-6">
                         {" "}
-                        {/* Added some margin-top for spacing */}
                         <h4 className="text-lg font-medium text-white mb-4">Downloadable Documents</h4>
                         <div className="space-y-4">
                           {project.documents.map((doc, docIndex) => (
@@ -291,7 +288,6 @@ export default function ProjectsPage() {
                         </div>
                       </div>
                     )}
-                    {/* --- END OF ADDED JSX FOR DOCUMENT DOWNLOADS --- */}
                   </div>
 
                   <div>
@@ -351,7 +347,6 @@ export default function ProjectsPage() {
                       </p>
                     </div>
                   )}
-                  {/* Updated title check to match your data */}
                   {project.title === "Portfolio Website" && (
                     <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
                       <h4 className="text-lg font-medium text-white mb-2 flex items-center">
@@ -398,7 +393,6 @@ export default function ProjectsPage() {
                 key={index}
                 className="bg-black border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300"
               >
-                {/* Adjusted conditional rendering for current projects based on your structure */}
                 <CardHeader>
                   {project.imageUrl && !project.images /* If only imageUrl is present */ && (
                     <img
