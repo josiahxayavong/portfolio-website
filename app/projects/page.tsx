@@ -168,7 +168,7 @@ export default function ProjectsPage() {
       ],
     },
     {
-      title: "Portfolio Website",
+      title: "Portfolio Website - Documentation",
       description:
         "This portfolio website, built with Next.js, Tailwind CSS, and Framer Motion. It includes comprehensive technical documentation detailing its architecture, components, and development process.",
       longDescription: [
@@ -309,7 +309,7 @@ export default function ProjectsPage() {
           </p>
         </div>
       )}
-      {project.title === "Portfolio Website" && (
+      {project.title === "Portfolio Website - Documentation" && (
         <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
           <h4 className="text-lg font-medium text-white mb-2 flex items-center">
             <Code className="w-5 h-5 mr-2 text-emerald-400" />
