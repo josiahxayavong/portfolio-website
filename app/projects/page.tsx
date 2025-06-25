@@ -5,11 +5,14 @@
 import { useState } from "react"
 
 // import custom UI components and icons used in project cards
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { CardDescription } from "@/components/ui/card" // Card components are used within AccordionContent now
 import { Lightbulb, Clock, CheckCircle, Mail, Code, Download } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { ImageGallery } from "@/components/ui/image-gallery"
 import { ContactForm } from "@/components/contact-form"
+
+// import Accordion components from shadcn/ui for the dropdown functionality
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 // import animation utilities from Framer Motion for contact modal
 import { AnimatePresence, motion } from "framer-motion"
@@ -40,15 +43,15 @@ interface Project {
   description: string
   longDescription: string[]
   tags: string[]
-  images?: Array<{ src: string; alt: string; caption: string }> 
-  documents?: ProjectDocument[] 
-  completed?: string 
-  teamSize?: string 
-  role: string 
+  images?: Array<{ src: string; alt: string; caption: string }>
+  documents?: ProjectDocument[]
+  completed?: string
+  teamSize?: string
+  role: string
   keyFeatures: string[]
-  status?: string 
-  imageUrl?: string 
-  sourceInfo?: string 
+  status?: string
+  imageUrl?: string
+  sourceInfo?: string
 }
 
 export default function ProjectsPage() {
@@ -81,7 +84,7 @@ export default function ProjectsPage() {
         },
       ],
       status: "In Development",
-      role: "Lead Developer", 
+      role: "Lead Developer",
       keyFeatures: [
         "Realistic card gameplay mechanics",
         "Player statistics and performance tracking",
@@ -188,6 +191,8 @@ export default function ProjectsPage() {
         "Technical Writing",
       ],
       role: "Full-Stack Developer",
+      completed: "June 2025",
+      teamSize: "1 Developer",
       keyFeatures: [
         "Responsive and Interactive UI/UX",
         "Server-Side Rendering with Next.js",
@@ -212,6 +217,131 @@ export default function ProjectsPage() {
     },
   ]
 
+  // this function renders the detailed content for each project.
+  // it's used within the AccordionContent component to keep the main mapping logic cleaner
+  // and to reuse the detailed layout for both past and current projects.
+  const renderProjectAccordionContent = (project: Project) => (
+    <div className="space-y-8 pt-4">
+      {" "}
+      <CardDescription className="text-gray-300 text-base leading-relaxed">{project.description}</CardDescription>
+      {/* conditionally render image gallery if images exist */}
+      {project.images && project.images.length > 0 && (
+        <>
+          <h4 className="text-lg font-medium text-white mb-4">Project Screenshots</h4>
+          <ImageGallery images={project.images} />
+        </>
+      )}
+      {project.documents && project.documents.length > 0 && (
+        <div className="mt-6">
+          {" "}
+          <h4 className="text-lg font-medium text-white mb-4">Downloadable Documents</h4>
+          <div className="space-y-4">
+            {project.documents.map((doc, docIndex) => (
+              <a
+                key={docIndex}
+                href={`/documents/${doc.fileName}`}
+                download={doc.fileName}
+                className="flex items-start p-4 bg-black border border-gray-700 rounded-lg hover:border-emerald-400 transition-all duration-300 group"
+              >
+                <Download className="w-6 h-6 mr-4 text-emerald-400 group-hover:text-emerald-300 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-white font-medium group-hover:text-emerald-300">{doc.title}</p>
+                  <p className="text-sm text-gray-400 group-hover:text-gray-300">{doc.description}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+      <div>
+        <h4 className="text-lg font-medium text-white mb-3">Key Features</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+          {" "}
+          {/* adjusted gap for better spacing */}
+          {project.keyFeatures.map((feature, featureIndex) => (
+            <div key={featureIndex} className="flex items-center space-x-2 text-gray-300">
+              <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0"></div> {/* Added flex-shrink-0 */}
+              <span className="text-sm">{feature}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h4 className="text-lg font-medium text-white mb-3">Technical Implementation</h4>
+        <ul className="space-y-2 text-gray-300">
+          {project.longDescription.map((item, itemIndex) => (
+            <li key={itemIndex} className="flex items-start space-x-3">
+              <span className="text-gray-500 text-sm leading-none mt-1">•</span> {/* Adjusted margin for alignment */}
+              <span className="text-sm leading-relaxed">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h4 className="text-lg font-medium text-white mb-3">Technologies Used</h4>
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <Badge
+              key={tag}
+              variant="secondary"
+              className="bg-black border border-gray-700 text-gray-200 hover:bg-emerald-400 hover:text-black hover:border-emerald-400 transition-colors px-3 py-1"
+            >
+              {tag}
+            </Badge>
+          ))}
+        </div>
+      </div>
+      {project.title === "Musical Journeys" && (
+        <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
+          <h4 className="text-lg font-medium text-white mb-2 flex items-center">
+            <Mail className="w-5 h-5 mr-2 text-emerald-400" />
+            Source Code Access
+          </h4>
+          <p className="text-gray-300 text-sm">
+            Interested in reviewing the source code for this project? Please email me at{" "}
+            <button
+              onClick={() => setShowContactForm(true)}
+              className="text-emerald-400 hover:text-emerald-300 transition-colors underline cursor-pointer"
+            >
+              josiahxaya@gmail.com
+            </button>{" "}
+            with your request, and I'd be happy to share it for educational or review purposes.
+          </p>
+        </div>
+      )}
+      {project.title === "Portfolio Website" && (
+        <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
+          <h4 className="text-lg font-medium text-white mb-2 flex items-center">
+            <Code className="w-5 h-5 mr-2 text-emerald-400" />
+            Source Code Access
+          </h4>
+          <p className="text-gray-300 text-sm">
+            The source code for this portfolio is well-annotated and available on my{" "}
+            <a
+              href="https://github.com/josiahxayavong/portfolio-website"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-emerald-400 hover:text-emerald-300 transition-colors underline"
+            >
+              GitHub
+            </a>
+            .
+          </p>
+        </div>
+      )}
+      {project.title === "BlackJack Pro" && (
+        <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300">
+          <h4 className="text-lg font-medium text-white mb-2">Commercial Project Notice</h4>
+          <p className="text-gray-300 text-sm">
+            This is a commercial project currently in development for release on iOS App Store and Android Play Store.
+            Source code is proprietary and not publicly available as this application is intended for monetization
+            through in-app purchases.
+          </p>
+        </div>
+      )}
+    </div>
+  )
+
   return (
     <div className="container mx-auto px-4 py-8 md:px-6 md:py-12 space-y-12">
       {/* HERO SECTION: intro with project overview */}
@@ -223,7 +353,7 @@ export default function ProjectsPage() {
         </p>
       </section>
 
-      {/* PAST PROJECTS Section */}
+      {/* --- PAST PROJECTS SECTION */}
       <section id="past-projects">
         <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
           <CheckCircle className="w-8 h-8 mr-3 text-emerald-400" />
@@ -231,146 +361,40 @@ export default function ProjectsPage() {
         </h2>
 
         {pastProjects.length > 0 ? (
-          <div className="space-y-12">
+          <Accordion type="single" collapsible className="w-full space-y-6">
             {pastProjects.map((project, index) => (
-              <Card
-                key={index}
-                className="bg-black border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300"
+              // each project is now an AccordionItem instead of a Card
+              <AccordionItem
+                value={`past-item-${index}`} // Unique value for accordion state
+                key={`past-${index}`}
+                className="bg-black border-2 border-gray-700 rounded-lg hover:border-emerald-400 transition-colors duration-300"
               >
-                <CardHeader>
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <CardTitle className="text-2xl text-white mb-2">{project.title}</CardTitle>
-                      {(project.completed || project.teamSize || project.role) && (
-                        <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
-                          {project.completed && <span>Completed: {project.completed}</span>}
-                          {project.teamSize && <span>Team Size: {project.teamSize}</span>}
-                          {project.role && <span>Role: {project.role}</span>}
-                        </div>
-                      )}
-                      <span className="text-xs bg-green-700/30 text-green-400 px-2 py-1 rounded-full">Completed</span>
-                    </div>
-                  </div>
-                  <CardDescription className="text-gray-300 text-base leading-relaxed">
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent className="space-y-8">
-                  <div>
-                    {/* conditionally render image gallery if images exist */}
-                    {project.images && project.images.length > 0 && (
-                      <>
-                        <h4 className="text-lg font-medium text-white mb-4">Project Screenshots</h4>
-                        <ImageGallery images={project.images} />
-                      </>
-                    )}
-
-                    {project.documents && project.documents.length > 0 && (
-                      <div className="mt-6">
-                        {" "}
-                        <h4 className="text-lg font-medium text-white mb-4">Downloadable Documents</h4>
-                        <div className="space-y-4">
-                          {project.documents.map((doc, docIndex) => (
-                            <a
-                              key={docIndex}
-                              href={`/documents/${doc.fileName}`}
-                              download={doc.fileName}
-                              className="flex items-start p-4 bg-black border border-gray-700 rounded-lg hover:border-emerald-400 transition-all duration-300 group"
-                            >
-                              <Download className="w-6 h-6 mr-4 text-emerald-400 group-hover:text-emerald-300 flex-shrink-0 mt-1" />
-                              <div>
-                                <p className="text-white font-medium group-hover:text-emerald-300">{doc.title}</p>
-                                <p className="text-sm text-gray-400 group-hover:text-gray-300">{doc.description}</p>
-                              </div>
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  <div>
-                    <h4 className="text-lg font-medium text-white mb-3">Key Features</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      {project.keyFeatures.map((feature, featureIndex) => (
-                        <div key={featureIndex} className="flex items-center space-x-2 text-gray-300">
-                          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                          <span className="text-sm">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-lg font-medium text-white mb-3">Technical Implementation</h4>
-                    <ul className="space-y-2 text-gray-300">
-                      {project.longDescription.map((item, itemIndex) => (
-                        <li key={itemIndex} className="flex items-start space-x-3">
-                          <span className="text-gray-500 text-sm leading-none mt-0.5">•</span>
-                          <span className="text-sm leading-relaxed">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h4 className="text-lg font-medium text-white mb-3">Technologies Used</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <Badge
-                          key={tag}
-                          variant="secondary"
-                          className="bg-black border border-gray-700 text-gray-200 hover:bg-emerald-400 hover:text-black hover:border-emerald-400 transition-colors px-3 py-1"
-                        >
-                          {tag}
+                {/* AccordionTrigger contains the clickable header part (project title and key badges) */}
+                <AccordionTrigger className="px-6 py-4 text-xl hover:no-underline">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between w-full text-left">
+                    <span className="text-white font-semibold">{project.title}</span>
+                    {/* badges for quick info in the trigger */}
+                    <div className="flex items-center space-x-2 mt-2 md:mt-0 flex-shrink-0">
+                      {project.completed && (
+                        <Badge variant="outlineSuccess" className="text-xs">
+                          Completed: {project.completed}
                         </Badge>
-                      ))}
+                      )}
+                      {project.role && (
+                        <Badge variant="outlineInfo" className="text-xs hidden sm:inline-flex">
+                          Role: {project.role}
+                        </Badge>
+                      )}
                     </div>
                   </div>
-
-                  {project.title === "Musical Journeys" && (
-                    <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
-                      <h4 className="text-lg font-medium text-white mb-2 flex items-center">
-                        <Mail className="w-5 h-5 mr-2 text-emerald-400" />
-                        Source Code Access
-                      </h4>
-                      <p className="text-gray-300 text-sm">
-                        Interested in reviewing the source code for this project? Please email me at{" "}
-                        <button
-                          onClick={() => setShowContactForm(true)}
-                          className="text-emerald-400 hover:text-emerald-300 transition-colors underline cursor-pointer"
-                        >
-                          josiahxaya@gmail.com
-                        </button>{" "}
-                        with your request, and I'd be happy to share it for educational or review purposes.
-                      </p>
-                    </div>
-                  )}
-                  {project.title === "Portfolio Website" && (
-                    <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
-                      <h4 className="text-lg font-medium text-white mb-2 flex items-center">
-                        <Code className="w-5 h-5 mr-2 text-emerald-400" />
-                        Source Code Access
-                      </h4>
-                      <p className="text-gray-300 text-sm">
-                        The source code for this portfolio is well-annotated and available on my{" "}
-                        <a
-                          href="https://github.com/josiahxayavong/portfolio-website"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-emerald-400 hover:text-emerald-300 transition-colors underline"
-                        >
-                          GitHub
-                        </a>
-                        .
-                      </p>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+                </AccordionTrigger>
+                {/* AccordionContent contains the detailed project information, rendered by our helper function */}
+                <AccordionContent className="px-6 pb-6 border-t border-gray-700/50">
+                  {renderProjectAccordionContent(project)}
+                </AccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </Accordion>
         ) : (
           <div className="text-center py-12">
             <Lightbulb className="w-16 h-16 mx-auto text-gray-600 mb-4" />
@@ -380,6 +404,7 @@ export default function ProjectsPage() {
         )}
       </section>
 
+      {/* --- CURRENT PROJECTS SECTION */}
       <section id="current-projects">
         <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
           <Clock className="w-8 h-8 mr-3 text-emerald-400" />
@@ -387,105 +412,42 @@ export default function ProjectsPage() {
         </h2>
 
         {currentProjects.length > 0 ? (
-          <div className="space-y-12">
+          // replaced the div with Card components with an Accordion component
+          <Accordion type="single" collapsible className="w-full space-y-6">
             {currentProjects.map((project, index) => (
-              <Card
-                key={index}
-                className="bg-black border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300"
+              // each project is now an AccordionItem
+              <AccordionItem
+                value={`current-item-${index}`} // Unique value
+                key={`current-${index}`}
+                // styling from the old Card component
+                className="bg-black border-2 border-gray-700 rounded-lg hover:border-emerald-400 transition-colors duration-300"
               >
-                <CardHeader>
-                  {project.imageUrl && !project.images /* If only imageUrl is present */ && (
-                    <img
-                      src={project.imageUrl || "/placeholder.svg"}
-                      alt={project.title}
-                      className="rounded-t-lg mb-4 aspect-[16/10] object-cover"
-                      width={400}
-                      height={250}
-                    />
-                  )}
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <CardTitle className="text-2xl text-white mb-2">{project.title}</CardTitle>
-                      <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
-                        {project.status && (
-                          <span className="text-xs bg-amber-700/30 text-amber-400 px-2 py-1 rounded-full">
-                            {project.status}
-                          </span>
-                        )}
-                        {project.sourceInfo && <span>Source: {project.sourceInfo}</span>}
-                      </div>
-                    </div>
-                  </div>
-                  <CardDescription className="text-gray-300 text-base leading-relaxed">
-                    {project.description}
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent className="space-y-8">
-                  {project.images && project.images.length > 0 && (
-                    <div>
-                      <h4 className="text-lg font-medium text-white mb-4">Project Screenshots</h4>
-                      <ImageGallery images={project.images} />
-                    </div>
-                  )}
-
-                  {project.keyFeatures && (
-                    <div>
-                      <h4 className="text-lg font-medium text-white mb-3">Key Features</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        {project.keyFeatures.map((feature, featureIndex) => (
-                          <div key={featureIndex} className="flex items-center space-x-2 text-gray-300">
-                            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                            <span className="text-sm">{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {project.longDescription && (
-                    <div>
-                      <h4 className="text-lg font-medium text-white mb-3">Technical Implementation</h4>
-                      <ul className="space-y-2 text-gray-300">
-                        {project.longDescription.map((item, itemIndex) => (
-                          <li key={itemIndex} className="flex items-start space-x-3">
-                            <span className="text-gray-500 text-sm leading-none mt-0.5">•</span>
-                            <span className="text-sm leading-relaxed">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  <div>
-                    <h4 className="text-lg font-medium text-white mb-3">Technologies Used</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <Badge
-                          key={tag}
-                          variant="secondary"
-                          className="bg-black border border-gray-700 text-gray-200 hover:bg-emerald-400 hover:text-black hover:border-emerald-400 transition-colors px-3 py-1"
-                        >
-                          {tag}
+                {/* AccordionTrigger for the project title and status badges */}
+                <AccordionTrigger className="px-6 py-4 text-xl hover:no-underline">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between w-full text-left">
+                    <span className="text-white font-semibold">{project.title}</span>
+                    {/* badges for quick info in the trigger */}
+                    <div className="flex items-center space-x-2 mt-2 md:mt-0 flex-shrink-0">
+                      {project.status && (
+                        <Badge variant="outlineWarning" className="text-xs">
+                          {project.status}
                         </Badge>
-                      ))}
+                      )}
+                      {project.sourceInfo && (
+                        <Badge variant="outlineSecondary" className="text-xs hidden sm:inline-flex">
+                          Source: {project.sourceInfo}
+                        </Badge>
+                      )}
                     </div>
                   </div>
-
-                  {project.title === "BlackJack Pro" && (
-                    <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300">
-                      <h4 className="text-lg font-medium text-white mb-2">Commercial Project Notice</h4>
-                      <p className="text-gray-300 text-sm">
-                        This is a commercial project currently in development for release on iOS App Store and Android
-                        Play Store. Source code is proprietary and not publicly available as this application is
-                        intended for monetization through in-app purchases.
-                      </p>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+                </AccordionTrigger>
+                {/* AccordionContent renders detailed project info via helper function */}
+                <AccordionContent className="px-6 pb-6 border-t border-gray-700/50">
+                  {renderProjectAccordionContent(project)}
+                </AccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </Accordion>
         ) : (
           <div className="text-center py-12">
             <Lightbulb className="w-16 h-16 mx-auto text-gray-600 mb-4" />
@@ -495,6 +457,7 @@ export default function ProjectsPage() {
         )}
       </section>
 
+      {/* Contact Form Modal */}
       <AnimatePresence>
         {showContactForm && (
           <motion.div
