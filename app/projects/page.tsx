@@ -361,7 +361,7 @@ export default function ProjectsPage() {
         </h2>
 
         {pastProjects.length > 0 ? (
-          <Accordion type="single" collapsible className="w-full space-y-6">
+          <Accordion type="multiple" className="w-full space-y-6">
             {pastProjects.map((project, index) => (
               // each project is now an AccordionItem instead of a Card
               <AccordionItem
@@ -413,7 +413,7 @@ export default function ProjectsPage() {
 
         {currentProjects.length > 0 ? (
           // replaced the div with Card components with an Accordion component
-          <Accordion type="single" collapsible className="w-full space-y-6">
+          <Accordion type="multiple" className="w-full space-y-6">
             {currentProjects.map((project, index) => (
               // each project is now an AccordionItem
               <AccordionItem
