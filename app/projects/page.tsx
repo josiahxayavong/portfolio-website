@@ -62,7 +62,7 @@ export default function ProjectsPage() {
   // explicitly type the array with the new Project interface
   const currentProjects: Project[] = [
     {
-      title: "BlackJack Pro",
+      title: "BlackJack Pro - Mobile App",
       description:
         "A premium mobile blackjack game developed for iOS and Android platforms. Features realistic gameplay, player statistics, achievements, and in-app purchases. Currently in final development stages with planned release to app stores.",
       tags: ["React Native", "Expo", "JavaScript", "TypeScript", "Mobile Development", "Game Development"],
@@ -109,7 +109,7 @@ export default function ProjectsPage() {
   // explicitly type the array with the new Project interface
   const pastProjects: Project[] = [
     {
-      title: "Musical Journeys",
+      title: "Musical Journeys - Scheduling and Management Platform",
       description:
         "A comprehensive music lesson scheduling and management platform built for a local music school. Features multi-role authentication, calendar integration, payment tracking, and lesson management for students, instructors, and business owners.",
       longDescription: [
@@ -291,7 +291,7 @@ export default function ProjectsPage() {
           ))}
         </div>
       </div>
-      {project.title === "Musical Journeys" && (
+      {project.title === "Musical Journeys - Scheduling and Management Platform" && (
         <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
           <h4 className="text-lg font-medium text-white mb-2 flex items-center">
             <Mail className="w-5 h-5 mr-2 text-emerald-400" />
@@ -329,7 +329,7 @@ export default function ProjectsPage() {
           </p>
         </div>
       )}
-      {project.title === "BlackJack Pro" && (
+      {project.title === "BlackJack Pro - Mobile App" && (
         <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300">
           <h4 className="text-lg font-medium text-white mb-2">Commercial Project Notice</h4>
           <p className="text-gray-300 text-sm">
