@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: "Josiah Xayavong | Portfolio",
   description:
     "Portfolio of Josiah Xayavong, a Computer Information Systems professional with experience in web development, robot engineering, and cloud computing.",
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 /* root layout component used to wrap all pages */
@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={${inter.className} bg-black text-gray-200 antialiased}>
+      <body className={`${inter.className} bg-black text-gray-200 antialiased`}>
         {/* apply theme provider and enable dark mode by default */}
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           {/* site-wide navigation bar */}
