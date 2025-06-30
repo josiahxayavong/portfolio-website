@@ -17,8 +17,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 // import animation utilities from Framer Motion for contact modal
 import { AnimatePresence, motion } from "framer-motion"
 
-import FadeIn from "@/components/layout/fade-in"
-
 // TypeScript interfaces define the "shape" or structure of objects.
 // they help ensure data consistency and provide autocompletion and type-checking during development.
 
@@ -345,7 +343,6 @@ export default function ProjectsPage() {
   )
 
   return (
-    <FadeIn>
       <div className="container mx-auto px-4 py-8 md:px-6 md:py-12 space-y-12">
         {/* HERO SECTION: intro with project overview */}
         <section id="projects-hero" className="text-center pt-8">
@@ -488,6 +485,5 @@ export default function ProjectsPage() {
           )}
         </AnimatePresence>
       </div>
-    </FadeIn>
   )
 }

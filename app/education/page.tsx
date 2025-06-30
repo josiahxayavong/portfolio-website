@@ -8,8 +8,6 @@ import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { GraduationCap, BookOpen, ChevronDown, ChevronUp } from "lucide-react"
 
-import FadeIn from "@/components/layout/fade-in"
-
 // main component for the education and coursework page
 export default function EducationPage() {
   // track which courses are currently expanded (open) using a Set for efficient lookups
@@ -350,7 +348,6 @@ export default function EducationPage() {
 
   // renders the full layout with hero, degree info, and dynamic course cards
   return (
-    <FadeIn>
       <div className="container mx-auto px-4 py-8 md:px-6 md:py-12 space-y-12">
         {/* Header section with page title and summary */}
         <section id="education-hero" className="text-center pt-8">
@@ -451,6 +448,5 @@ export default function EducationPage() {
           </div>
         </section>
       </div>
-    </FadeIn>
   )
 }

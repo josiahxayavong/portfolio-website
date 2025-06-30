@@ -17,8 +17,6 @@ import { Mail, Phone, MapPin, Briefcase, Cpu, Palette, Award, Star, Server, Data
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
-import FadeIn from "@/components/layout/fade-in"
-
 // main homepage component
 export default function HomePage() {
   // tracks if email or phone was just copied
@@ -130,7 +128,6 @@ export default function HomePage() {
 
   // everything below renders the homepage visually using the data above
   return (
-    <FadeIn>
       <div className="min-h-screen">
         {/* HERO SECTION: Includes profile picture, animated name heading, subtitle, and contact buttons */}
         {/* Contains clipboard copy interaction, hover effects, and a brief intro */}
@@ -404,6 +401,5 @@ export default function HomePage() {
           </section>
         </div>
       </div>
-    </FadeIn>
   )
 }
