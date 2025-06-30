@@ -11,6 +11,9 @@ import { Navbar } from "@/components/layout/navbar"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Analytics } from "@vercel/analytics/next"
 
+/* import page transition layout for smooth route animations */
+import PageTransitionLayout from "@/components/layout/page-transition-layout"
+
 /* configure inter font with latin character subset */
 const inter = Inter({ subsets: ["latin"] })
 
@@ -19,7 +22,7 @@ export const metadata: Metadata = {
   title: "Josiah Xayavong | Portfolio",
   description:
     "Portfolio of Josiah Xayavong, a Computer Information Systems professional with experience in web development, robot engineering, and cloud computing.",
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 /* root layout component used to wrap all pages */
@@ -36,8 +39,10 @@ export default function RootLayout({
           {/* site-wide navigation bar */}
           <Navbar />
 
-          {/* render main content from page components */}
-          <main className="pb-24 md:pb-8">{children}</main>
+          {/* wrap main content in animated transition layout */}
+          <PageTransitionLayout>
+            <main className="pb-24 md:pb-8">{children}</main>
+          </PageTransitionLayout>
           
           {/* include analytics tracking from vercel */}
           <Analytics />
