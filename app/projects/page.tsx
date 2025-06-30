@@ -17,6 +17,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 // import animation utilities from Framer Motion for contact modal
 import { AnimatePresence, motion } from "framer-motion"
 
+import FadeIn from "@/components/layout/fade-in"
+
 // TypeScript interfaces define the "shape" or structure of objects.
 // they help ensure data consistency and provide autocompletion and type-checking during development.
 
@@ -343,147 +345,149 @@ export default function ProjectsPage() {
   )
 
   return (
-    <div className="container mx-auto px-4 py-8 md:px-6 md:py-12 space-y-12">
-      {/* HERO SECTION: intro with project overview */}
-      <section id="projects-hero" className="text-center pt-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Projects</h1>
-        <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
-          A collection of personal, academic, and freelance projects I've worked on. Each project reflects my passion
-          for technology and problem-solving.
-        </p>
-      </section>
+    <FadeIn>
+      <div className="container mx-auto px-4 py-8 md:px-6 md:py-12 space-y-12">
+        {/* HERO SECTION: intro with project overview */}
+        <section id="projects-hero" className="text-center pt-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Projects</h1>
+          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+            A collection of personal, academic, and freelance projects I've worked on. Each project reflects my passion
+            for technology and problem-solving.
+          </p>
+        </section>
 
-      {/* --- PAST PROJECTS SECTION */}
-      <section id="past-projects">
-        <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
-          <CheckCircle className="w-8 h-8 mr-3 text-emerald-400" />
-          Past Projects
-        </h2>
+        {/* --- PAST PROJECTS SECTION */}
+        <section id="past-projects">
+          <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
+            <CheckCircle className="w-8 h-8 mr-3 text-emerald-400" />
+            Past Projects
+          </h2>
 
-        {pastProjects.length > 0 ? (
-          <Accordion type="multiple" className="w-full space-y-6">
-            {pastProjects.map((project, index) => (
-              // each project is now an AccordionItem instead of a Card
-              <AccordionItem
-                value={`past-item-${index}`} // Unique value for accordion state
-                key={`past-${index}`}
-                className="bg-black border-2 border-gray-700 rounded-lg hover:border-emerald-400 transition-colors duration-300"
-              >
-                {/* AccordionTrigger contains the clickable header part (project title and key badges) */}
-                <AccordionTrigger className="px-6 py-4 text-xl hover:no-underline">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between w-full text-left">
-                    <span className="text-white font-semibold">{project.title}</span>
-                    {/* badges for quick info in the trigger */}
-                    <div className="flex items-center space-x-2 mt-2 md:mt-0 flex-shrink-0">
-                      {project.completed && (
-                        <Badge variant="outlineSuccess" className="text-xs">
-                          Completed: {project.completed}
-                        </Badge>
-                      )}
-                      {project.role && (
-                        <Badge variant="outlineInfo" className="text-xs hidden sm:inline-flex">
-                          Role: {project.role}
-                        </Badge>
-                      )}
+          {pastProjects.length > 0 ? (
+            <Accordion type="multiple" className="w-full space-y-6">
+              {pastProjects.map((project, index) => (
+                // each project is now an AccordionItem instead of a Card
+                <AccordionItem
+                  value={`past-item-${index}`} // Unique value for accordion state
+                  key={`past-${index}`}
+                  className="bg-black border-2 border-gray-700 rounded-lg hover:border-emerald-400 transition-colors duration-300"
+                >
+                  {/* AccordionTrigger contains the clickable header part (project title and key badges) */}
+                  <AccordionTrigger className="px-6 py-4 text-xl hover:no-underline">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between w-full text-left">
+                      <span className="text-white font-semibold">{project.title}</span>
+                      {/* badges for quick info in the trigger */}
+                      <div className="flex items-center space-x-2 mt-2 md:mt-0 flex-shrink-0">
+                        {project.completed && (
+                          <Badge variant="outlineSuccess" className="text-xs">
+                            Completed: {project.completed}
+                          </Badge>
+                        )}
+                        {project.role && (
+                          <Badge variant="outlineInfo" className="text-xs hidden sm:inline-flex">
+                            Role: {project.role}
+                          </Badge>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </AccordionTrigger>
-                {/* AccordionContent contains the detailed project information, rendered by our helper function */}
-                <AccordionContent className="px-6 pb-6 border-t border-gray-700/50">
-                  {renderProjectAccordionContent(project)}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        ) : (
-          <div className="text-center py-12">
-            <Lightbulb className="w-16 h-16 mx-auto text-gray-600 mb-4" />
-            <h2 className="text-2xl font-semibold text-white mb-2">No Past Projects</h2>
-            <p className="text-gray-400">I'm working on my first projects. Check back soon!</p>
-          </div>
-        )}
-      </section>
+                  </AccordionTrigger>
+                  {/* AccordionContent contains the detailed project information, rendered by our helper function */}
+                  <AccordionContent className="px-6 pb-6 border-t border-gray-700/50">
+                    {renderProjectAccordionContent(project)}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          ) : (
+            <div className="text-center py-12">
+              <Lightbulb className="w-16 h-16 mx-auto text-gray-600 mb-4" />
+              <h2 className="text-2xl font-semibold text-white mb-2">No Past Projects</h2>
+              <p className="text-gray-400">I'm working on my first projects. Check back soon!</p>
+            </div>
+          )}
+        </section>
 
-      {/* --- CURRENT PROJECTS SECTION */}
-      <section id="current-projects">
-        <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
-          <Clock className="w-8 h-8 mr-3 text-emerald-400" />
-          Current Projects
-        </h2>
+        {/* --- CURRENT PROJECTS SECTION */}
+        <section id="current-projects">
+          <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
+            <Clock className="w-8 h-8 mr-3 text-emerald-400" />
+            Current Projects
+          </h2>
 
-        {currentProjects.length > 0 ? (
-          // replaced the div with Card components with an Accordion component
-          <Accordion type="multiple" className="w-full space-y-6">
-            {currentProjects.map((project, index) => (
-              // each project is now an AccordionItem
-              <AccordionItem
-                value={`current-item-${index}`} // Unique value
-                key={`current-${index}`}
-                // styling from the old Card component
-                className="bg-black border-2 border-gray-700 rounded-lg hover:border-emerald-400 transition-colors duration-300"
-              >
-                {/* AccordionTrigger for the project title and status badges */}
-                <AccordionTrigger className="px-6 py-4 text-xl hover:no-underline">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between w-full text-left">
-                    <span className="text-white font-semibold">{project.title}</span>
-                    {/* badges for quick info in the trigger */}
-                    <div className="flex items-center space-x-2 mt-2 md:mt-0 flex-shrink-0">
-                      {project.status && (
-                        <Badge variant="outlineWarning" className="text-xs">
-                          {project.status}
-                        </Badge>
-                      )}
-                      {project.sourceInfo && (
-                        <Badge variant="outlineSecondary" className="text-xs hidden sm:inline-flex">
-                          Source: {project.sourceInfo}
-                        </Badge>
-                      )}
+          {currentProjects.length > 0 ? (
+            // replaced the div with Card components with an Accordion component
+            <Accordion type="multiple" className="w-full space-y-6">
+              {currentProjects.map((project, index) => (
+                // each project is now an AccordionItem
+                <AccordionItem
+                  value={`current-item-${index}`} // Unique value
+                  key={`current-${index}`}
+                  // styling from the old Card component
+                  className="bg-black border-2 border-gray-700 rounded-lg hover:border-emerald-400 transition-colors duration-300"
+                >
+                  {/* AccordionTrigger for the project title and status badges */}
+                  <AccordionTrigger className="px-6 py-4 text-xl hover:no-underline">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between w-full text-left">
+                      <span className="text-white font-semibold">{project.title}</span>
+                      {/* badges for quick info in the trigger */}
+                      <div className="flex items-center space-x-2 mt-2 md:mt-0 flex-shrink-0">
+                        {project.status && (
+                          <Badge variant="outlineWarning" className="text-xs">
+                            {project.status}
+                          </Badge>
+                        )}
+                        {project.sourceInfo && (
+                          <Badge variant="outlineSecondary" className="text-xs hidden sm:inline-flex">
+                            Source: {project.sourceInfo}
+                          </Badge>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </AccordionTrigger>
-                {/* AccordionContent renders detailed project info via helper function */}
-                <AccordionContent className="px-6 pb-6 border-t border-gray-700/50">
-                  {renderProjectAccordionContent(project)}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        ) : (
-          <div className="text-center py-12">
-            <Lightbulb className="w-16 h-16 mx-auto text-gray-600 mb-4" />
-            <h2 className="text-2xl font-semibold text-white mb-2">No Current Projects</h2>
-            <p className="text-gray-400">I'm currently planning my next project. Check back soon!</p>
-          </div>
-        )}
-      </section>
+                  </AccordionTrigger>
+                  {/* AccordionContent renders detailed project info via helper function */}
+                  <AccordionContent className="px-6 pb-6 border-t border-gray-700/50">
+                    {renderProjectAccordionContent(project)}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          ) : (
+            <div className="text-center py-12">
+              <Lightbulb className="w-16 h-16 mx-auto text-gray-600 mb-4" />
+              <h2 className="text-2xl font-semibold text-white mb-2">No Current Projects</h2>
+              <p className="text-gray-400">I'm currently planning my next project. Check back soon!</p>
+            </div>
+          )}
+        </section>
 
-      {/* Contact Form Modal */}
-      <AnimatePresence>
-        {showContactForm && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[60] p-4"
-          >
+        {/* Contact Form Modal */}
+        <AnimatePresence>
+          {showContactForm && (
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 10 }}
-              transition={{
-                type: "spring",
-                damping: 25,
-                stiffness: 300,
-                duration: 0.3,
-              }}
-              className="w-full max-w-md"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[60] p-4"
             >
-              <ContactForm onClose={() => setShowContactForm(false)} />
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 10 }}
+                transition={{
+                  type: "spring",
+                  damping: 25,
+                  stiffness: 300,
+                  duration: 0.3,
+                }}
+                className="w-full max-w-md"
+              >
+                <ContactForm onClose={() => setShowContactForm(false)} />
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+          )}
+        </AnimatePresence>
+      </div>
+    </FadeIn>
   )
 }

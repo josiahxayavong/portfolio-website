@@ -12,7 +12,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Analytics } from "@vercel/analytics/next"
 
 /* import page transition layout for smooth route animations */
-import PageTransitionLayout from "@/components/layout/page-transition-layout"
+import PageTransitionLayout from "@/components/layout/fade-in"
 
 /* configure inter font with latin character subset */
 const inter = Inter({ subsets: ["latin"] })
@@ -38,11 +38,6 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           {/* site-wide navigation bar */}
           <Navbar />
-
-          {/* wrap main content in animated transition layout */}
-          <PageTransitionLayout>
-            <main className="pb-24 md:pb-8">{children}</main>
-          </PageTransitionLayout>
           
           {/* include analytics tracking from vercel */}
           <Analytics />
