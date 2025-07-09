@@ -1,59 +1,63 @@
+/* this tells Next.js that this file must run on the client side.
+it's required for handling form state with 'useState' and for
+all the client-side animations with Framer Motion. */
 "use client"
 
-// import types and hooks
+// importing React types and the 'useState' hook
 import type React from "react"
 import { useState } from "react"
 
-// import ui components and icons
+// importing reusable UI components and icons
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Mail, User, MessageSquare, Send, Check, X, AlertCircle } from "lucide-react"
 
-// import framer motion for animations
+// importing animation components from Framer Motion
 import { motion, AnimatePresence } from "framer-motion"
 
-// props type for contact form to handle closing
+// defining the props for this component, which includes a function to close the modal
 interface ContactFormProps {
   onClose: () => void
 }
 
+// main ContactForm component
 export function ContactForm({ onClose }: ContactFormProps) {
-  // form data state
+  // state to hold the form's input data
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   })
-
-  // track form submission and error states
+  // state to track the submission process (for showing a loading spinner)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  // state to show the success message after submission
   const [isSubmitted, setIsSubmitted] = useState(false)
+  // state to handle the closing animation
   const [isClosing, setIsClosing] = useState(false)
+  // state to store any error messages from the server
   const [error, setError] = useState<string | null>(null)
 
-  // update input field state on change
+  // updates the form data state as the user types
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }))
-    // clear error if user begins editing
-    if (error) setError(null)
+    if (error) setError(null) // clear error when user starts typing again
   }
 
-  // handle form submission
+  // handles the form submission when the user clicks "Send"
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault() // prevent default browser form submission
     setIsSubmitting(true)
     setError(null)
 
     try {
+      // sends the form data to my API route
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       })
 
@@ -63,39 +67,35 @@ export function ContactForm({ onClose }: ContactFormProps) {
         throw new Error(result.error || "Failed to send message")
       }
 
+      // on success, show the success message
       setIsSubmitting(false)
       setIsSubmitted(true)
 
-      // close form after short delay (3 seconds)
+      // automatically close the form after 3 seconds
       setTimeout(() => {
-        setIsClosing(true)
-        setTimeout(() => {
-          onClose()
-          setIsSubmitted(false)
-          setIsClosing(false)
-          setFormData({ name: "", email: "", message: "" })
-        }, 300)
+        handleClose()
       }, 3000)
     } catch (error) {
+      // on failure, show an error message
       setIsSubmitting(false)
       setError(error instanceof Error ? error.message : "Failed to send message. Please try again.")
     }
   }
 
-  // close form instantly
+  // handles the closing animation and calls the onClose prop
   const handleClose = () => {
     setIsClosing(true)
     setTimeout(() => {
       onClose()
       setIsClosing(false)
       setError(null)
-    }, 300)
+    }, 300) // wait for animation to finish
   }
 
-  // check if all form fields are filled out
+  // simple validation to enable/disable the submit button
   const isFormValid = formData.name.trim() && formData.email.trim() && formData.message.trim()
 
-  // show success animation if form was submitted
+  // if the form is submitted successfully, render the success message
   if (isSubmitted) {
     return (
       <AnimatePresence>
@@ -103,7 +103,6 @@ export function ContactForm({ onClose }: ContactFormProps) {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          transition={{ type: "spring", damping: 25, stiffness: 300 }}
         >
           <Card className="bg-black border-2 border-emerald-400">
             <CardContent className="pt-6 text-center">
@@ -111,27 +110,12 @@ export function ContactForm({ onClose }: ContactFormProps) {
                 <motion.div
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
-                  transition={{ type: "spring", damping: 15, stiffness: 200, delay: 0.1 }}
                   className="w-16 h-16 bg-emerald-400 rounded-full flex items-center justify-center"
                 >
                   <Check className="w-8 h-8 text-black" />
                 </motion.div>
-                <motion.h3
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-xl font-semibold text-white"
-                >
-                  Message Sent!
-                </motion.h3>
-                <motion.p
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="text-gray-300"
-                >
-                  Thank you for reaching out. I'll get back to you soon.
-                </motion.p>
+                <h3 className="text-xl font-semibold text-white">Message Sent!</h3>
+                <p className="text-gray-300">Thank you for reaching out. I'll get back to you soon.</p>
               </div>
             </CardContent>
           </Card>
@@ -140,16 +124,13 @@ export function ContactForm({ onClose }: ContactFormProps) {
     )
   }
 
-  // main contact form ui
+  // otherwise, render the contact form
   return (
     <Card className="bg-black border-2 border-gray-700 relative">
-      {/* close button in top corner */}
       <motion.button
         onClick={handleClose}
         whileHover={{ scale: 1.1, rotate: 90 }}
-        whileTap={{ scale: 0.9 }}
-        transition={{ type: "spring", stiffness: 400, damping: 15 }}
-        className="absolute top-4 right-4 w-8 h-8 border-2 border-gray-700 rounded-full flex items-center justify-center text-gray-400 hover:border-emerald-400 hover:text-emerald-400 transition-colors duration-300"
+        className="absolute top-4 right-4 w-8 h-8 border-2 border-gray-700 rounded-full flex items-center justify-center text-gray-400 hover:border-emerald-400 hover:text-emerald-400"
       >
         <X className="w-4 h-4" />
       </motion.button>
@@ -161,7 +142,7 @@ export function ContactForm({ onClose }: ContactFormProps) {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {/* error message if submit fails */}
+        {/* display an error message if one exists */}
         {error && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -173,9 +154,8 @@ export function ContactForm({ onClose }: ContactFormProps) {
           </motion.div>
         )}
 
-        {/* contact form fields */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* name input */}
+          {/* form fields with motion effects */}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
             <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
               <User className="w-4 h-4 inline mr-2" />
@@ -188,12 +168,11 @@ export function ContactForm({ onClose }: ContactFormProps) {
               value={formData.name}
               onChange={handleInputChange}
               required
-              className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400 transition-colors"
+              className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400"
               placeholder="Enter your full name"
             />
           </motion.div>
 
-          {/* email input */}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
             <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
               <Mail className="w-4 h-4 inline mr-2" />
@@ -206,12 +185,11 @@ export function ContactForm({ onClose }: ContactFormProps) {
               value={formData.email}
               onChange={handleInputChange}
               required
-              className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400 transition-colors"
+              className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400"
               placeholder="Enter your email address"
             />
           </motion.div>
 
-          {/* message textarea */}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
             <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
               <MessageSquare className="w-4 h-4 inline mr-2" />
@@ -224,12 +202,11 @@ export function ContactForm({ onClose }: ContactFormProps) {
               onChange={handleInputChange}
               required
               rows={4}
-              className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400 transition-colors resize-none"
+              className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-emerald-400 resize-none"
               placeholder="Tell me about your project or inquiry..."
             />
           </motion.div>
 
-          {/* submit button with loading state */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}

@@ -2,7 +2,7 @@
 
 Welcome to the repository for my personal portfolio website! This project showcases my skills, projects, professional experience, and educational background. It's built with modern web technologies to be performant, responsive, and visually appealing.
 
-**Live Demo:** https://josiahxayavong.com
+**Live Demo:** [Your Live Portfolio URL Here] (e.g., `https://josiahxayavong.com`)
 
 ## Description
 
@@ -156,6 +156,10 @@ This project is optimized for deployment on [Vercel](https://vercel.com/), the c
 *   **Animations:**
     *   Animations are primarily handled by [Framer Motion](https://www.framer.com/motion/). Look for `<motion.*>` components and `variants` props within the TSX files.
 
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details. (You can choose a different license or remove this section if you prefer).
+
 ---
 
-Thank you for checking out my portfolio project! If you have any questions or suggestions, feel free to contact me.
+Thank you for checking out my portfolio project! If you have any questions or suggestions, feel free to open an issue or contact me.

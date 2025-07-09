@@ -1,63 +1,55 @@
+/* this is a Next.js API Route Handler. it runs on the server, not the browser.
+this is the secure backend for my contact form. it receives the form data,
+validates it, and then uses the Resend service to send an email to me. */
+
+// importing types from Next.js for handling server requests and responses
 import { type NextRequest, NextResponse } from "next/server"
+
+// importing the Resend library for sending emails
 import { Resend } from "resend"
 
-// This is exactly what Resend showed in their example, but using environment variable for security
+// initializing the Resend client with my secret API key.
+// 'process.env.RESEND_API_KEY' securely reads the key from an environment variable.
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+// this is the main function that handles incoming POST requests to '/api/contact'
 export async function POST(request: NextRequest) {
   try {
+    // parse the JSON data from the request body
     const { name, email, message } = await request.json()
 
-    // Validate the input
+    // basic server-side validation to make sure all fields are present
     if (!name || !email || !message) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
-    // Validate email format
+    // validate the email format using a simple regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
       return NextResponse.json({ error: "Invalid email format" }, { status: 400 })
     }
 
-    // This is the resend.emails.send() method from their example, but customized for your contact form
+    // using the resend.emails.send() method to send the email
     const data = await resend.emails.send({
-      from: "Portfolio Contact <onboarding@resend.dev>", // Using Resend's default for now
-      to: ["josiahxaya@gmail.com"], // Your email (same as their example)
-      subject: `New Contact Form Message from ${name}`, // Dynamic subject with sender's name
+      from: "Portfolio Contact <onboarding@resend.dev>", // using Resend's default sending address for now
+      to: ["josiahxaya@gmail.com"], // this is my personal email where I'll receive messages
+      subject: `New Contact Form Message from ${name}`, // dynamic subject line with the sender's name
+      // a more detailed HTML template for the email body
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #10b981; border-bottom: 2px solid #10b981; padding-bottom: 10px;">
-            New Contact Form Submission
-          </h2>
-          
-          <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="margin-top: 0; color: #333;">Contact Details:</h3>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-          </div>
-          
-          <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <h3 style="margin-top: 0; color: #333;">Message:</h3>
-            <p style="white-space: pre-wrap; line-height: 1.6;">${message}</p>
-          </div>
-          
-          <div style="margin-top: 30px; padding: 15px; background-color: #e6fffa; border-left: 4px solid #10b981; border-radius: 4px;">
-            <p style="margin: 0; color: #065f46;">
-              <strong>Reply to:</strong> ${email}
-            </p>
-          </div>
-          
-          <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e5e5;">
-          
-          <p style="color: #666; font-size: 14px; text-align: center;">
-            This message was sent from your portfolio contact form.
-          </p>
+          <h2 style="color: #10b981;">New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+          <h3 style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px;">Message:</h3>
+          <p style="white-space: pre-wrap;">${message}</p>
         </div>
-      `, // Much more detailed HTML than their simple example
+      `,
     })
 
+    // if the email sends successfully, return a success response
     return NextResponse.json({ success: true, data })
   } catch (error) {
+    // if there's an error, log it to the server console and return a generic error message
     console.error("Error sending email:", error)
     return NextResponse.json({ error: "Failed to send message. Please try again." }, { status: 500 })
   }

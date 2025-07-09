@@ -1,58 +1,58 @@
+/* this tells Next.js that this file must run on the client side.
+it's required for using hooks like 'useState', 'useEffect', and 'usePathname'
+to create an interactive navigation bar. */
 "use client"
 
-/* import link component and hooks from next */
+// importing necessary components and hooks from React and Next.js
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-
-/* import react hooks and contact form component */
 import { useState, useEffect } from "react"
+
+// importing icons and the contact form component
 import { Home, Briefcase, GraduationCap, Mail } from "lucide-react"
 import { ContactForm } from "@/components/contact-form"
 
-/* import animation tools */
+// importing animation components from Framer Motion
 import { AnimatePresence, motion } from "framer-motion"
 
+// main Navbar component
 export function Navbar() {
-  // get the current route path
+  // 'pathname' gets the current URL path to highlight the active link
   const pathname = usePathname()
-
-  // track whether the user has scrolled down the page
+  // 'isScrolled' tracks if the user has scrolled down, to show the sticky nav
   const [isScrolled, setIsScrolled] = useState(false)
-
-  // toggle visibility of contact form
+  // 'showContactForm' toggles the visibility of the contact form modal
   const [showContactForm, setShowContactForm] = useState(false)
 
-  // add scroll listener to show sticky nav after scrolling down
+  // this effect adds a scroll event listener when the component mounts
+  // and removes it when it unmounts to prevent memory leaks.
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100)
+      setIsScrolled(window.scrollY > 100) // show sticky nav after 100px of scrolling
     }
-
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // navigation links for all devices
+  // data array for my main navigation links to keep the code DRY
   const navLinks = [
     { href: "/", label: "Home", icon: Home },
     { href: "/projects", label: "Projects", icon: Briefcase },
     { href: "/education", label: "Education", icon: GraduationCap },
   ]
 
+  // the main return statement renders the different navigation bars
   return (
     <>
-      {/* main desktop navbar */}
+      {/* Main Navigation (Desktop, visible at the top of the page) */}
       <header className="bg-black sticky top-0 z-50 transition-all duration-300">
         <nav className="container mx-auto px-4 md:px-6 py-6 flex justify-between items-center">
-          {/* logo and nav links */}
           <div className="flex items-center space-x-8">
             <Link href="/" className="flex items-center">
               <div className="w-12 h-12 border-2 border-white rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">JX</span>
               </div>
             </Link>
-
-            {/* desktop navigation links */}
             <div className="hidden md:flex space-x-8">
               {navLinks.map((link) => (
                 <Link
@@ -62,13 +62,10 @@ export function Navbar() {
                 >
                   <span className="relative z-10">{link.label}</span>
                   <div className="absolute bottom-0 left-0 w-full h-0.5 bg-emerald-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-                  <div className="absolute inset-0 bg-emerald-400 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-bottom -z-10"></div>
                 </Link>
               ))}
             </div>
           </div>
-
-          {/* contact button */}
           <button
             onClick={() => setShowContactForm(true)}
             className="border-2 border-white px-6 py-2 rounded-lg text-white font-medium hover:bg-emerald-400 hover:border-emerald-400 hover:text-black transition-colors duration-300"
@@ -78,7 +75,7 @@ export function Navbar() {
         </nav>
       </header>
 
-      {/* sticky navbar when user scrolls */}
+      {/* Sticky Navigation (Desktop, appears on scroll) */}
       <div
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
@@ -92,8 +89,6 @@ export function Navbar() {
                   <span className="text-black font-bold text-base">JX</span>
                 </div>
               </Link>
-
-              {/* nav links with active state indicator */}
               <div className="hidden md:flex space-x-8">
                 {navLinks.map((link) => (
                   <Link
@@ -105,13 +100,10 @@ export function Navbar() {
                   >
                     <span className="relative z-10">{link.label}</span>
                     {pathname === link.href && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-black"></div>}
-                    <div className="absolute bottom-0 left-0 w-full h-0.5 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                   </Link>
                 ))}
               </div>
             </div>
-
-            {/* contact button in sticky nav */}
             <button
               onClick={() => setShowContactForm(true)}
               className="border-2 border-black px-6 py-2 rounded-lg text-black font-medium hover:bg-black hover:text-emerald-400 transition-colors duration-300"
@@ -122,7 +114,7 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* mobile nav bar shown at bottom of screen */}
+      {/* Mobile Navigation (appears at the bottom on small screens) */}
       <div className="md:hidden fixed bottom-4 left-4 right-4 z-50">
         <div className="bg-black border border-gray-700 rounded-2xl p-4">
           <div className="flex justify-around">
@@ -149,7 +141,7 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* contact form overlay with framer motion animations */}
+      {/* Contact Form Overlay with Animation */}
       <AnimatePresence>
         {showContactForm && (
           <motion.div

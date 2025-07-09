@@ -1,43 +1,31 @@
-// tells Next.js this file should run on the client (needed for useState, animations, and events)
+/* this tells Next.js that this file must run on the client side.
+it's required for using hooks like 'useState' to manage state,
+such as showing or hiding the contact form modal. */
 "use client"
 
-// import useState for toggling the contact form
+// importing 'useState' hook from React to manage component state
 import { useState } from "react"
 
-// import custom UI components and icons used in project cards
-import { CardDescription } from "@/components/ui/card" // Card components are used within AccordionContent now
+// importing reusable UI components and icons for a consistent look and feel
+import { CardDescription } from "@/components/ui/card"
 import { Lightbulb, Clock, CheckCircle, Mail, Code, Download } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { ImageGallery } from "@/components/ui/image-gallery"
 import { ContactForm } from "@/components/contact-form"
-
-// import Accordion components from shadcn/ui for the dropdown functionality
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-
-// import animation utilities from Framer Motion for contact modal
 import { AnimatePresence, motion } from "framer-motion"
 
-// TypeScript interfaces define the "shape" or structure of objects.
-// they help ensure data consistency and provide autocompletion and type-checking during development.
+// TypeScript interfaces define the "shape" or structure of my data.
+// this helps me avoid errors by ensuring all project data is consistent.
 
-// `ProjectDocument` defines the structure for an individual downloadable document
-// associated with a project. Each document will have a title, a specific file name
-// (which is crucial for linking to the correct file in the /public/documents directory),
-// and a brief description.
+// defines the structure for a downloadable document
 interface ProjectDocument {
   title: string
   fileName: string
   description: string
 }
 
-// `Project` defines the overall structure for a project object.
-// it includes all the properties a project can have, such as its title,
-// description (short and long), tags (technologies used), an optional array of images
-// for the gallery, an optional array of `ProjectDocument` objects (for downloads),
-// completion status, team size, role, key features, current status,
-// and an optional image URL (e.g., for projects without a full gallery).
-// making certain fields optional (e.g., `images`, `documents`, `completed`) allows for
-// flexibility in defining different types of projects.
+// defines the structure for a single project object
 interface Project {
   title: string
   description: string
@@ -54,12 +42,12 @@ interface Project {
   sourceInfo?: string
 }
 
+// main projects page component
 export default function ProjectsPage() {
-  // controls visibility of the contact form modal
+  // state to control the visibility of the contact form modal
   const [showContactForm, setShowContactForm] = useState(false)
 
-  // data for currently active/in-progress project(s)
-  // explicitly type the array with the new Project interface
+  // data for my currently active/in-progress projects
   const currentProjects: Project[] = [
     {
       title: "BlackJack Pro - Mobile App",
@@ -105,9 +93,77 @@ export default function ProjectsPage() {
     },
   ]
 
-  // data for previously completed project(s)
-  // explicitly type the array with the new Project interface
+  // data for my previously completed projects
   const pastProjects: Project[] = [
+    {
+      title: "FBI University Crime Data Analysis",
+      description:
+        "A data analysis project involving the design of a relational database, creation of an ETL pipeline, and development of Power BI dashboards to visualize FBI-reported crime data from over 800 universities.",
+      longDescription: [
+        "Designed and implemented a relational database in SQL Server to store and analyze FBI-reported crime data across 800+ universities from 2017 to 2019.",
+        "Built a complete ETL pipeline to extract raw data from CSVs, clean and transform inconsistent values, and load into a normalized schema.",
+        "Created Entity Relationship Diagrams (ERDs) to support schema design and enforce referential integrity between state, university, and crime statistics tables.",
+        "Applied data cleansing techniques using SQL scripting and logic to resolve nulls and formatting errors from source files.",
+        "Developed interactive Power BI dashboards to visualize trends by crime type, location, and year, enabling data-driven decision-making and insights generation.",
+      ],
+      tags: ["SQL Server", "Power BI", "ETL", "Data Modeling", "Data Cleansing", "Dashboarding"],
+      images: [
+        {
+          src: "/images/fbi-database-erd-clean.png",
+          alt: "Conceptual ERD for FBI Crime Data",
+          caption:
+            "Initial conceptual Entity Relationship Diagram outlining the basic table structures and relationships.",
+        },
+        {
+          src: "/images/fbi-database-erd.png",
+          alt: "Final SQL Server Database Diagram",
+          caption:
+            "The final database diagram as implemented in SQL Server, showing refined table schemas and enforced relationships.",
+        },
+        {
+          src: "/images/fbi-dashboard-trends-by-school.png",
+          alt: "Power BI Dashboard - Crime Trends by School",
+          caption:
+            "Line charts showing violent and property crime trends for a selected university (James Madison University) from 2017-2019.",
+        },
+        {
+          src: "/images/fbi-dashboard-crime-by-state.png",
+          alt: "Power BI Dashboard - Crime per Capita by State",
+          caption: "Bar charts comparing violent and property crimes per capita across different states and years.",
+        },
+        {
+          src: "/images/fbi-dashboard-violent-crime-breakdown.png",
+          alt: "Power BI Dashboard - Violent Crime Breakdown",
+          caption:
+            "Pie chart illustrating the proportion of different violent crimes (Murder, Rape, Robbery, Aggravated Assault).",
+        },
+        {
+          src: "/images/fbi-dashboard-property-crime-breakdown.png",
+          alt: "Power BI Dashboard - Property Crime Breakdown",
+          caption:
+            "Pie chart illustrating the proportion of different property crimes (Burglary, Larceny, Motor Theft, Arson).",
+        },
+      ],
+      documents: [
+        {
+          title: "ETL & Data Cleansing SQL Script",
+          fileName: "fbi-crime-data-etl.sql",
+          description:
+            "The complete SQL script for the ETL process, including raw data ingestion, data cleansing with cursors, and populating the final normalized database.",
+        },
+      ],
+      completed: "May 2025",
+      teamSize: "3 developers",
+      role: "Data Engineer & Analyst",
+      keyFeatures: [
+        "Relational Database Design",
+        "Full ETL Pipeline Implementation",
+        "Advanced Data Cleansing & Normalization",
+        "Interactive Power BI Dashboards",
+        "Entity Relationship Diagram (ERD) Modeling",
+        "SQL Scripting for Data Transformation",
+      ],
+    },
     {
       title: "Musical Journeys - Scheduling and Management Platform",
       description:
@@ -218,22 +274,21 @@ export default function ProjectsPage() {
   ]
 
   // this function renders the detailed content for each project.
-  // it's used within the AccordionContent component to keep the main mapping logic cleaner
-  // and to reuse the detailed layout for both past and current projects.
+  // I made this a separate function to keep the main return statement cleaner
+  // and to reuse this layout for both past and current projects.
   const renderProjectAccordionContent = (project: Project) => (
     <div className="space-y-8 pt-4">
-      {" "}
       <CardDescription className="text-gray-300 text-base leading-relaxed">{project.description}</CardDescription>
-      {/* conditionally render image gallery if images exist */}
+      {/* conditionally render image gallery only if images exist */}
       {project.images && project.images.length > 0 && (
         <>
-          <h4 className="text-lg font-medium text-white mb-4">Project Screenshots</h4>
+          <h4 className="text-lg font-medium text-white mb-4">Project Gallery</h4>
           <ImageGallery images={project.images} />
         </>
       )}
+      {/* conditionally render documents section only if documents exist */}
       {project.documents && project.documents.length > 0 && (
         <div className="mt-6">
-          {" "}
           <h4 className="text-lg font-medium text-white mb-4">Downloadable Documents</h4>
           <div className="space-y-4">
             {project.documents.map((doc, docIndex) => (
@@ -256,11 +311,9 @@ export default function ProjectsPage() {
       <div>
         <h4 className="text-lg font-medium text-white mb-3">Key Features</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
-          {" "}
-          {/* adjusted gap for better spacing */}
           {project.keyFeatures.map((feature, featureIndex) => (
             <div key={featureIndex} className="flex items-center space-x-2 text-gray-300">
-              <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0"></div> {/* Added flex-shrink-0 */}
+              <div className="w-2 h-2 bg-green-400 rounded-full flex-shrink-0"></div>
               <span className="text-sm">{feature}</span>
             </div>
           ))}
@@ -271,7 +324,7 @@ export default function ProjectsPage() {
         <ul className="space-y-2 text-gray-300">
           {project.longDescription.map((item, itemIndex) => (
             <li key={itemIndex} className="flex items-start space-x-3">
-              <span className="text-gray-500 text-sm leading-none mt-1">•</span> {/* Adjusted margin for alignment */}
+              <span className="text-gray-500 text-sm leading-none mt-1">•</span>
               <span className="text-sm leading-relaxed">{item}</span>
             </li>
           ))}
@@ -291,6 +344,7 @@ export default function ProjectsPage() {
           ))}
         </div>
       </div>
+      {/* special notices for specific projects */}
       {project.title === "Musical Journeys - Scheduling and Management Platform" && (
         <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
           <h4 className="text-lg font-medium text-white mb-2 flex items-center">
@@ -342,148 +396,137 @@ export default function ProjectsPage() {
     </div>
   )
 
+  // the main return statement renders the page structure
   return (
-      <div className="container mx-auto px-4 py-8 md:px-6 md:py-12 space-y-12">
-        {/* HERO SECTION: intro with project overview */}
-        <section id="projects-hero" className="text-center pt-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Projects</h1>
-          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
-            A collection of personal, academic, and freelance projects I've worked on. Each project reflects my passion
-            for technology and problem-solving.
-          </p>
-        </section>
+    <div className="container mx-auto px-4 py-8 md:px-6 md:py-12 space-y-12">
+      {/* HERO SECTION: intro with project overview */}
+      <section id="projects-hero" className="text-center pt-8">
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Projects</h1>
+        <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+          A collection of personal, academic, and freelance projects I've worked on. Each project reflects my passion
+          for technology and problem-solving.
+        </p>
+      </section>
 
-        {/* --- PAST PROJECTS SECTION */}
-        <section id="past-projects">
-          <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
-            <CheckCircle className="w-8 h-8 mr-3 text-emerald-400" />
-            Past Projects
-          </h2>
-
-          {pastProjects.length > 0 ? (
-            <Accordion type="multiple" className="w-full space-y-6">
-              {pastProjects.map((project, index) => (
-                // each project is now an AccordionItem instead of a Card
-                <AccordionItem
-                  value={`past-item-${index}`} // Unique value for accordion state
-                  key={`past-${index}`}
-                  className="bg-black border-2 border-gray-700 rounded-lg hover:border-emerald-400 transition-colors duration-300"
-                >
-                  {/* AccordionTrigger contains the clickable header part (project title and key badges) */}
-                  <AccordionTrigger className="px-6 py-4 text-xl hover:no-underline">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between w-full text-left">
-                      <span className="text-white font-semibold">{project.title}</span>
-                      {/* badges for quick info in the trigger */}
-                      <div className="flex items-center space-x-2 mt-2 md:mt-0 flex-shrink-0">
-                        {project.completed && (
-                          <Badge variant="outlineSuccess" className="text-xs">
-                            Completed: {project.completed}
-                          </Badge>
-                        )}
-                        {project.role && (
-                          <Badge variant="outlineInfo" className="text-xs hidden sm:inline-flex">
-                            Role: {project.role}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-                  </AccordionTrigger>
-                  {/* AccordionContent contains the detailed project information, rendered by our helper function */}
-                  <AccordionContent className="px-6 pb-6 border-t border-gray-700/50">
-                    {renderProjectAccordionContent(project)}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          ) : (
-            <div className="text-center py-12">
-              <Lightbulb className="w-16 h-16 mx-auto text-gray-600 mb-4" />
-              <h2 className="text-2xl font-semibold text-white mb-2">No Past Projects</h2>
-              <p className="text-gray-400">I'm working on my first projects. Check back soon!</p>
-            </div>
-          )}
-        </section>
-
-        {/* --- CURRENT PROJECTS SECTION */}
-        <section id="current-projects">
-          <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
-            <Clock className="w-8 h-8 mr-3 text-emerald-400" />
-            Current Projects
-          </h2>
-
-          {currentProjects.length > 0 ? (
-            // replaced the div with Card components with an Accordion component
-            <Accordion type="multiple" className="w-full space-y-6">
-              {currentProjects.map((project, index) => (
-                // each project is now an AccordionItem
-                <AccordionItem
-                  value={`current-item-${index}`} // Unique value
-                  key={`current-${index}`}
-                  // styling from the old Card component
-                  className="bg-black border-2 border-gray-700 rounded-lg hover:border-emerald-400 transition-colors duration-300"
-                >
-                  {/* AccordionTrigger for the project title and status badges */}
-                  <AccordionTrigger className="px-6 py-4 text-xl hover:no-underline">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between w-full text-left">
-                      <span className="text-white font-semibold">{project.title}</span>
-                      {/* badges for quick info in the trigger */}
-                      <div className="flex items-center space-x-2 mt-2 md:mt-0 flex-shrink-0">
-                        {project.status && (
-                          <Badge variant="outlineWarning" className="text-xs">
-                            {project.status}
-                          </Badge>
-                        )}
-                        {project.sourceInfo && (
-                          <Badge variant="outlineSecondary" className="text-xs hidden sm:inline-flex">
-                            Source: {project.sourceInfo}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-                  </AccordionTrigger>
-                  {/* AccordionContent renders detailed project info via helper function */}
-                  <AccordionContent className="px-6 pb-6 border-t border-gray-700/50">
-                    {renderProjectAccordionContent(project)}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          ) : (
-            <div className="text-center py-12">
-              <Lightbulb className="w-16 h-16 mx-auto text-gray-600 mb-4" />
-              <h2 className="text-2xl font-semibold text-white mb-2">No Current Projects</h2>
-              <p className="text-gray-400">I'm currently planning my next project. Check back soon!</p>
-            </div>
-          )}
-        </section>
-
-        {/* Contact Form Modal */}
-        <AnimatePresence>
-          {showContactForm && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[60] p-4"
-            >
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.9, opacity: 0, y: 10 }}
-                transition={{
-                  type: "spring",
-                  damping: 25,
-                  stiffness: 300,
-                  duration: 0.3,
-                }}
-                className="w-full max-w-md"
+      {/* PAST PROJECTS SECTION: uses Accordion for expandable project details */}
+      <section id="past-projects">
+        <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
+          <CheckCircle className="w-8 h-8 mr-3 text-emerald-400" />
+          Past Projects
+        </h2>
+        {pastProjects.length > 0 ? (
+          <Accordion type="multiple" className="w-full space-y-6">
+            {pastProjects.map((project, index) => (
+              <AccordionItem
+                value={`past-item-${index}`}
+                key={`past-${index}`}
+                className="bg-black border-2 border-gray-700 rounded-lg hover:border-emerald-400 transition-colors duration-300"
               >
-                <ContactForm onClose={() => setShowContactForm(false)} />
-              </motion.div>
+                <AccordionTrigger className="px-6 py-4 text-xl hover:no-underline">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between w-full text-left">
+                    <span className="text-white font-semibold">{project.title}</span>
+                    <div className="flex items-center space-x-2 mt-2 md:mt-0 flex-shrink-0">
+                      {project.completed && (
+                        <Badge variant="outlineSuccess" className="text-xs">
+                          Completed: {project.completed}
+                        </Badge>
+                      )}
+                      {project.role && (
+                        <Badge variant="outlineInfo" className="text-xs hidden sm:inline-flex">
+                          Role: {project.role}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-6 border-t border-gray-700/50">
+                  {renderProjectAccordionContent(project)}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        ) : (
+          <div className="text-center py-12">
+            <Lightbulb className="w-16 h-16 mx-auto text-gray-600 mb-4" />
+            <h2 className="text-2xl font-semibold text-white mb-2">No Past Projects</h2>
+            <p className="text-gray-400">I'm working on my first projects. Check back soon!</p>
+          </div>
+        )}
+      </section>
+
+      {/* CURRENT PROJECTS SECTION: also uses Accordion for consistency */}
+      <section id="current-projects">
+        <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
+          <Clock className="w-8 h-8 mr-3 text-emerald-400" />
+          Current Projects
+        </h2>
+        {currentProjects.length > 0 ? (
+          <Accordion type="multiple" className="w-full space-y-6">
+            {currentProjects.map((project, index) => (
+              <AccordionItem
+                value={`current-item-${index}`}
+                key={`current-${index}`}
+                className="bg-black border-2 border-gray-700 rounded-lg hover:border-emerald-400 transition-colors duration-300"
+              >
+                <AccordionTrigger className="px-6 py-4 text-xl hover:no-underline">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between w-full text-left">
+                    <span className="text-white font-semibold">{project.title}</span>
+                    <div className="flex items-center space-x-2 mt-2 md:mt-0 flex-shrink-0">
+                      {project.status && (
+                        <Badge variant="outlineWarning" className="text-xs">
+                          {project.status}
+                        </Badge>
+                      )}
+                      {project.sourceInfo && (
+                        <Badge variant="outlineSecondary" className="text-xs hidden sm:inline-flex">
+                          Source: {project.sourceInfo}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-6 border-t border-gray-700/50">
+                  {renderProjectAccordionContent(project)}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        ) : (
+          <div className="text-center py-12">
+            <Lightbulb className="w-16 h-16 mx-auto text-gray-600 mb-4" />
+            <h2 className="text-2xl font-semibold text-white mb-2">No Current Projects</h2>
+            <p className="text-gray-400">I'm currently planning my next project. Check back soon!</p>
+          </div>
+        )}
+      </section>
+
+      {/* Contact Form Modal: this is hidden by default and shown when 'showContactForm' is true */}
+      <AnimatePresence>
+        {showContactForm && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[60] p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 10 }}
+              transition={{
+                type: "spring",
+                damping: 25,
+                stiffness: 300,
+                duration: 0.3,
+              }}
+              className="w-full max-w-md"
+            >
+              <ContactForm onClose={() => setShowContactForm(false)} />
             </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }

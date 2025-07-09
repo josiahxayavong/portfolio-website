@@ -1,20 +1,16 @@
 "use client"
 
-// inspired by react-hot-toast library
+// Inspired by react-hot-toast library
 import * as React from "react"
 
-// import toast component types
 import type {
   ToastActionElement,
   ToastProps,
 } from "@/components/ui/toast"
 
-// max number of toasts and how long they stay visible
 const TOAST_LIMIT = 1
 const TOAST_REMOVE_DELAY = 1000000
 
-// extended toast type with required props
-// includes id, optional title/description, and optional action
 type ToasterToast = ToastProps & {
   id: string
   title?: React.ReactNode
@@ -22,7 +18,6 @@ type ToasterToast = ToastProps & {
   action?: ToastActionElement
 }
 
-// define action types for managing toast state
 const actionTypes = {
   ADD_TOAST: "ADD_TOAST",
   UPDATE_TOAST: "UPDATE_TOAST",
@@ -30,8 +25,8 @@ const actionTypes = {
   REMOVE_TOAST: "REMOVE_TOAST",
 } as const
 
-// generate unique id for each toast
 let count = 0
+
 function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER
   return count.toString()
@@ -57,15 +52,12 @@ type Action =
       toastId?: ToasterToast["id"]
     }
 
-// shape of global toast state
 interface State {
   toasts: ToasterToast[]
 }
 
-// map for keeping track of active toast timeouts
 const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
 
-// function to remove toast after delay
 const addToRemoveQueue = (toastId: string) => {
   if (toastTimeouts.has(toastId)) {
     return
@@ -82,7 +74,6 @@ const addToRemoveQueue = (toastId: string) => {
   toastTimeouts.set(toastId, timeout)
 }
 
-// reducer to handle toast actions and update state accordingly
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "ADD_TOAST":
@@ -102,7 +93,6 @@ export const reducer = (state: State, action: Action): State => {
     case "DISMISS_TOAST": {
       const { toastId } = action
 
-      // start countdown to remove toast
       // ! Side effects ! - This could be extracted into a dismissToast() action,
       // but I'll keep it here for simplicity
       if (toastId) {
@@ -139,13 +129,10 @@ export const reducer = (state: State, action: Action): State => {
   }
 }
 
-// list of listener functions to broadcast state changes
 const listeners: Array<(state: State) => void> = []
 
-// global toast state stored in memory
 let memoryState: State = { toasts: [] }
 
-// dispatch helper to update memory and notify listeners
 function dispatch(action: Action) {
   memoryState = reducer(memoryState, action)
   listeners.forEach((listener) => {
@@ -155,7 +142,6 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">
 
-// public toast function to show toast and manage lifecycle
 function toast({ ...props }: Toast) {
   const id = genId()
 
@@ -185,7 +171,6 @@ function toast({ ...props }: Toast) {
   }
 }
 
-// hook that exposes current toast state and helpers
 function useToast() {
   const [state, setState] = React.useState<State>(memoryState)
 
