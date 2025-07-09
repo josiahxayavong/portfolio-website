@@ -10,9 +10,6 @@ import "./globals.css"
 // importing my main layout and provider components
 import { Navbar } from "@/components/layout/navbar"
 import { ThemeProvider } from "@/components/theme-provider"
-import { PageTransition } from "@/components/page-transition"
-import { ClientOnly } from "@/components/client-only" // Import the new component
-
 // importing Vercel Analytics to track site performance
 import { Analytics } from "@vercel/analytics/react"
 
@@ -46,17 +43,12 @@ export default function RootLayout({
           <Navbar />
           {/* Suspense is used by React to handle loading states for server components */}
           <Suspense>
-            {/* Wrap PageTransition in our new ClientOnly component */}
-            <ClientOnly>
-              <PageTransition>
-                <main className="pb-24 md:pb-8">{children}</main>
-                {/* Footer is also included inside the transition so it fades with the page */}
-                <footer className="text-center text-gray-500 py-8 border-t border-gray-800 mt-12">
-                  <p>&copy; {new Date().getFullYear()} Josiah Xayavong. All rights reserved.</p>
-                  <p className="mt-1 text-sm">Built with Next.js and Tailwind CSS.</p>
-                </footer>
-              </PageTransition>
-            </ClientOnly>
+            <main className="pb-24 md:pb-8">{children}</main>
+            {/* Footer is also included inside the transition so it fades with the page */}
+            <footer className="text-center text-gray-500 py-8 border-t border-gray-800 mt-12">
+              <p>&copy; {new Date().getFullYear()} Josiah Xayavong. All rights reserved.</p>
+              <p className="mt-1 text-sm">Built with Next.js and Tailwind CSS.</p>
+            </footer>
           </Suspense>
           {/* Vercel Analytics component */}
           <Analytics />
