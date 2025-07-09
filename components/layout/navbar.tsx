@@ -17,7 +17,7 @@ import { AnimatePresence, motion } from "framer-motion"
 
 // main Navbar component
 export function Navbar() {
-  // 'pathname' gets the current URL path to highlight the active link
+  // 'pathname' gets the current URL path to highlight the active link on mobile
   const pathname = usePathname()
   // 'isScrolled' tracks if the user has scrolled down, to show the sticky nav
   const [isScrolled, setIsScrolled] = useState(false)
@@ -53,15 +53,17 @@ export function Navbar() {
                 <span className="text-white font-bold text-lg">JX</span>
               </div>
             </Link>
-            <div className="hidden md:flex space-x-8">
+            <div className="hidden md:flex space-x-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="relative group text-white font-medium text-lg transition-colors hover:text-white"
+                  className="relative group text-white font-medium text-lg transition-colors px-3 py-2"
                 >
-                  <span className="relative z-10">{link.label}</span>
-                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-emerald-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                  <span className="relative z-10 transition-colors duration-300 group-hover:text-black">
+                    {link.label}
+                  </span>
+                  <div className="absolute inset-0 bg-emerald-400 rounded-md transform transition-transform duration-300 origin-bottom z-0 scale-y-0 group-hover:scale-y-100"></div>
                 </Link>
               ))}
             </div>
@@ -89,17 +91,17 @@ export function Navbar() {
                   <span className="text-black font-bold text-base">JX</span>
                 </div>
               </Link>
-              <div className="hidden md:flex space-x-8">
+              <div className="hidden md:flex space-x-4">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative group font-medium text-lg transition-colors ${
-                      pathname === link.href ? "text-black" : "text-black hover:text-black"
-                    }`}
+                    className="relative group font-medium text-lg text-black px-3 py-2"
                   >
-                    <span className="relative z-10">{link.label}</span>
-                    {pathname === link.href && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-black"></div>}
+                    <span className="relative z-10 transition-colors duration-300 group-hover:text-emerald-400">
+                      {link.label}
+                    </span>
+                    <div className="absolute inset-0 bg-black rounded-md transform transition-transform duration-300 origin-bottom z-0 scale-y-0 group-hover:scale-y-100"></div>
                   </Link>
                 ))}
               </div>
