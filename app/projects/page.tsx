@@ -96,7 +96,7 @@ export default function ProjectsPage() {
   // data for my previously completed projects
   const pastProjects: Project[] = [
     {
-      title: "FBI University Crime Data Analysis",
+      title: "University Crime - Data Analysis",
       description:
         "A data analysis project involving the design of a relational database, creation of an ETL pipeline, and development of Power BI dashboards to visualize FBI-reported crime data from over 800 universities.",
       longDescription: [

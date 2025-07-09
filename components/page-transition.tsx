@@ -24,9 +24,10 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
     <AnimatePresence mode="wait">
       <motion.div
         key={pathname} // the unique key that triggers the animation
-        initial={{ opacity: 0 }} // start with the page invisible
-        animate={{ opacity: 1 }} // fade in to full visibility
-        exit={{ opacity: 0 }} // fade out to invisible
+        className="bg-black" // Added background to prevent content flash
+        initial={{ opacity: 0, y: 15 }} // Start invisible and slightly down
+        animate={{ opacity: 1, y: 0 }} // Animate to visible and original position
+        exit={{ opacity: 0, y: 15 }} // Exit to invisible and slightly down
         transition={{
           duration: 0.34, // the speed of the animation
           ease: "easeInOut", // the animation timing function
