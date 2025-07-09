@@ -257,7 +257,7 @@ export default function ProjectsPage() {
       ],
     },
     {
-      title: "Job Postings Data Analysis | Pandas & NLTK | Python",
+      title: "Job Postings - Data Analysis",
       description:
         "Analyzed a dataset of job postings and applicant submissions using Pandas for structured data manipulation and NLTK for natural language processing.",
       longDescription: [
@@ -283,13 +283,13 @@ export default function ProjectsPage() {
       documents: [
         {
           title: "Job Postings Data Analysis - Jupyter Notebook",
-          fileName: "NLTKPandas_JosiahXayavong-omsS5XtWY8eLbPn0UF0Ns16Vniwnzv.html",
+          fileName: "NLTKPandas_JosiahXayavong.html",
           description:
             "Complete reference guide including project structure, technologies, file breakdown, and component overview.",
         },
         {
           title: "Job Applications CSV",
-          fileName: "job_apps-Fw4HniFtv52gBuFDc4JA6VIboA5Irz.csv",
+          fileName: "job_apps.csv",
           description: "CSV file containing the raw data used for the analysis.",
         },
       ],
