@@ -1,12 +1,6 @@
-/* this tells Next.js that this file must run on the client side.
-it's required for using hooks like 'useState' to manage state,
-such as showing or hiding the contact form modal. */
 "use client"
 
-// importing 'useState' hook from React to manage component state
 import { useState } from "react"
-
-// importing reusable UI components and icons for a consistent look and feel
 import { CardDescription } from "@/components/ui/card"
 import { Lightbulb, Clock, CheckCircle, Mail, Code, Download } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -15,17 +9,12 @@ import { ContactForm } from "@/components/contact-form"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { AnimatePresence, motion } from "framer-motion"
 
-// TypeScript interfaces define the "shape" or structure of my data.
-// this helps me avoid errors by ensuring all project data is consistent.
-
-// defines the structure for a downloadable document
 interface ProjectDocument {
   title: string
   fileName: string
   description: string
 }
 
-// defines the structure for a single project object
 interface Project {
   title: string
   description: string
@@ -42,12 +31,9 @@ interface Project {
   sourceInfo?: string
 }
 
-// main projects page component
 export default function ProjectsPage() {
-  // state to control the visibility of the contact form modal
   const [showContactForm, setShowContactForm] = useState(false)
 
-  // data for my currently active/in-progress projects
   const currentProjects: Project[] = [
     {
       title: "BlackJack Pro - Mobile App",
@@ -93,7 +79,6 @@ export default function ProjectsPage() {
     },
   ]
 
-  // data for my previously completed projects
   const pastProjects: Project[] = [
     {
       title: "University Crime - Data Analysis",
@@ -167,7 +152,7 @@ export default function ProjectsPage() {
     {
       title: "Musical Journeys - Scheduling and Management Platform",
       description:
-        "A comprehensive music lesson scheduling and management platform built for a local music school. Features multi-role authentication, calendar integration, payment tracking, and lesson management for students, instructors, and business owners.",
+        "A comprehensive music lesson scheduling and management platform built for a local music school. Features multi-role authentication, calendar integration, payment tracking, and lesson notes management for students, instructors, and business owners.",
       longDescription: [
         "Developed a full-stack web application to streamline music lesson scheduling and business operations",
         "Designed and implemented a normalized relational database with 8 interconnected entities supporting multi-role user management",
@@ -271,22 +256,55 @@ export default function ProjectsPage() {
         },
       ],
     },
+    {
+      title: "Job Postings Data Analysis | Pandas & NLTK | Python",
+      description:
+        "Analyzed a dataset of job postings and applicant submissions using Pandas for structured data manipulation and NLTK for natural language processing.",
+      longDescription: [
+        "Analyzed a dataset of job postings and applicant submissions using Pandas for structured data manipulation and NLTK for natural language processing.",
+        "Extracted job title frequency, filtered engineering/science roles, and mapped company-to-job listings.",
+        "Cleaned unstructured applicant skillsets using string preprocessing and tokenization techniques.",
+        "Visualized skill distribution using frequency plots; created custom visualizations of sentiment scores from real cover letters.",
+        "Applied NLTK SentimentIntensityAnalyzer to compare tone across applicant cover letters.",
+        "Delivered results in a polished Jupyter Notebook with clear markdown annotations and custom plots.",
+      ],
+      tags: ["Pandas", "NLTK", "Python", "Data Analysis", "Data Visualization"],
+      role: "Data Analyst",
+      completed: "April 2025",
+      teamSize: "1 Developer",
+      keyFeatures: [
+        "Pandas Data Manipulation",
+        "NLTK for Natural Language Processing",
+        "Data Cleaning and Preprocessing",
+        "Data Visualization with Matplotlib and Seaborn",
+        "Sentiment Analysis",
+        "Jupyter Notebook Documentation",
+      ],
+      documents: [
+        {
+          title: "Job Postings Data Analysis - Jupyter Notebook",
+          fileName: "NLTKPandas_JosiahXayavong-omsS5XtWY8eLbPn0UF0Ns16Vniwnzv.html",
+          description:
+            "Complete reference guide including project structure, technologies, file breakdown, and component overview.",
+        },
+        {
+          title: "Job Applications CSV",
+          fileName: "job_apps-Fw4HniFtv52gBuFDc4JA6VIboA5Irz.csv",
+          description: "CSV file containing the raw data used for the analysis.",
+        },
+      ],
+    },
   ]
 
-  // this function renders the detailed content for each project.
-  // I made this a separate function to keep the main return statement cleaner
-  // and to reuse this layout for both past and current projects.
   const renderProjectAccordionContent = (project: Project) => (
     <div className="space-y-8 pt-4">
       <CardDescription className="text-gray-300 text-base leading-relaxed">{project.description}</CardDescription>
-      {/* conditionally render image gallery only if images exist */}
       {project.images && project.images.length > 0 && (
         <>
           <h4 className="text-lg font-medium text-white mb-4">Project Gallery</h4>
           <ImageGallery images={project.images} />
         </>
       )}
-      {/* conditionally render documents section only if documents exist */}
       {project.documents && project.documents.length > 0 && (
         <div className="mt-6">
           <h4 className="text-lg font-medium text-white mb-4">Downloadable Documents</h4>
@@ -344,7 +362,6 @@ export default function ProjectsPage() {
           ))}
         </div>
       </div>
-      {/* special notices for specific projects */}
       {project.title === "Musical Journeys - Scheduling and Management Platform" && (
         <div className="bg-black p-4 rounded-lg border-2 border-gray-700 hover:border-emerald-400 transition-colors duration-300 mt-6">
           <h4 className="text-lg font-medium text-white mb-2 flex items-center">
@@ -396,10 +413,8 @@ export default function ProjectsPage() {
     </div>
   )
 
-  // the main return statement renders the page structure
   return (
     <div className="container mx-auto px-4 py-8 md:px-6 md:py-12 space-y-12">
-      {/* HERO SECTION: intro with project overview */}
       <section id="projects-hero" className="text-center pt-8">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">My Projects</h1>
         <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
@@ -408,7 +423,6 @@ export default function ProjectsPage() {
         </p>
       </section>
 
-      {/* PAST PROJECTS SECTION: uses Accordion for expandable project details */}
       <section id="past-projects">
         <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
           <CheckCircle className="w-8 h-8 mr-3 text-emerald-400" />
@@ -454,7 +468,6 @@ export default function ProjectsPage() {
         )}
       </section>
 
-      {/* CURRENT PROJECTS SECTION: also uses Accordion for consistency */}
       <section id="current-projects">
         <h2 className="text-3xl font-semibold text-white mb-8 flex items-center">
           <Clock className="w-8 h-8 mr-3 text-emerald-400" />
@@ -500,7 +513,6 @@ export default function ProjectsPage() {
         )}
       </section>
 
-      {/* Contact Form Modal: this is hidden by default and shown when 'showContactForm' is true */}
       <AnimatePresence>
         {showContactForm && (
           <motion.div
