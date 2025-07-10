@@ -25,7 +25,6 @@ export const metadata: Metadata = {
   title: "Josiah Xayavong | Portfolio",
   description:
     "Portfolio of Josiah Xayavong, a Computer Information Systems professional with experience in web development, robot engineering, and cloud computing.",
-    generator: 'v0.dev'
 }
 
 // this is the main RootLayout component

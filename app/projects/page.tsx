@@ -80,221 +80,221 @@ export default function ProjectsPage() {
   ]
 
   const pastProjects: Project[] = [
-    {
-      title: "University Crime - Data Analysis",
-      description:
-        "A data analysis project involving the design of a relational database, creation of an ETL pipeline, and development of Power BI dashboards to visualize FBI-reported crime data from over 800 universities.",
-      longDescription: [
-        "Designed and implemented a relational database in SQL Server to store and analyze FBI-reported crime data across 800+ universities from 2017 to 2019.",
-        "Built a complete ETL pipeline to extract raw data from CSVs, clean and transform inconsistent values, and load into a normalized schema.",
-        "Created Entity Relationship Diagrams (ERDs) to support schema design and enforce referential integrity between state, university, and crime statistics tables.",
-        "Applied data cleansing techniques using SQL scripting and logic to resolve nulls and formatting errors from source files.",
-        "Developed interactive Power BI dashboards to visualize trends by crime type, location, and year, enabling data-driven decision-making and insights generation.",
-      ],
-      tags: ["SQL Server", "Power BI", "ETL", "Data Modeling", "Data Cleansing", "Dashboarding"],
-      images: [
-        {
-          src: "/images/fbi-database-erd-clean.png",
-          alt: "Conceptual ERD for FBI Crime Data",
-          caption:
-            "Initial conceptual Entity Relationship Diagram outlining the basic table structures and relationships.",
-        },
-        {
-          src: "/images/fbi-database-erd.png",
-          alt: "Final SQL Server Database Diagram",
-          caption:
-            "The final database diagram as implemented in SQL Server, showing refined table schemas and enforced relationships.",
-        },
-        {
-          src: "/images/fbi-dashboard-trends-by-school.png",
-          alt: "Power BI Dashboard - Crime Trends by School",
-          caption:
-            "Line charts showing violent and property crime trends for a selected university (James Madison University) from 2017-2019.",
-        },
-        {
-          src: "/images/fbi-dashboard-crime-by-state.png",
-          alt: "Power BI Dashboard - Crime per Capita by State",
-          caption: "Bar charts comparing violent and property crimes per capita across different states and years.",
-        },
-        {
-          src: "/images/fbi-dashboard-violent-crime-breakdown.png",
-          alt: "Power BI Dashboard - Violent Crime Breakdown",
-          caption:
-            "Pie chart illustrating the proportion of different violent crimes (Murder, Rape, Robbery, Aggravated Assault).",
-        },
-        {
-          src: "/images/fbi-dashboard-property-crime-breakdown.png",
-          alt: "Power BI Dashboard - Property Crime Breakdown",
-          caption:
-            "Pie chart illustrating the proportion of different property crimes (Burglary, Larceny, Motor Theft, Arson).",
-        },
-      ],
-      documents: [
-        {
-          title: "ETL & Data Cleansing SQL Script",
-          fileName: "fbi-crime-data-etl.sql",
-          description:
-            "The complete SQL script for the ETL process, including raw data ingestion, data cleansing with cursors, and populating the final normalized database.",
-        },
-      ],
-      completed: "May 2025",
-      teamSize: "3 developers",
-      role: "Data Engineer & Analyst",
-      keyFeatures: [
-        "Relational Database Design",
-        "Full ETL Pipeline Implementation",
-        "Advanced Data Cleansing & Normalization",
-        "Interactive Power BI Dashboards",
-        "Entity Relationship Diagram (ERD) Modeling",
-        "SQL Scripting for Data Transformation",
-      ],
-    },
-    {
-      title: "Musical Journeys - Scheduling and Management Platform",
-      description:
-        "A comprehensive music lesson scheduling and management platform built for a local music school. Features multi-role authentication, calendar integration, payment tracking, and lesson notes management for students, instructors, and business owners.",
-      longDescription: [
-        "Developed a full-stack web application to streamline music lesson scheduling and business operations",
-        "Designed and implemented a normalized relational database with 8 interconnected entities supporting multi-role user management",
-        "Built interactive calendar system for lesson scheduling and availability management",
-        "Created comprehensive payment tracking and lesson notes system with proper foreign key relationships",
-        "Implemented role-based authentication system supporting parents, students, renters, and business owners through a centralized credential system",
-        "Integrated room rental functionality with pricing calculations and duration tracking",
-        "Designed responsive UI with consistent branding and user-friendly forms",
-      ],
-      tags: ["ASP.NET Core", "C#", "SQL Server", "HTML", "CSS", "JavaScript"],
-      images: [
-        {
-          src: "/images/musical-journeys-homepage.png",
-          alt: "Musical Journeys Homepage",
-          caption: "Welcome page with branding and navigation",
-        },
-        {
-          src: "/images/musical-journeys-login.png",
-          alt: "Login System",
-          caption: "Secure authentication system with custom password hashing for enhanced backend security",
-        },
-        {
-          src: "/images/musical-journeys-lesson-signup.png",
-          alt: "Lesson Sign-up Form",
-          caption: "Comprehensive lesson booking system",
-        },
-        {
-          src: "/images/musical-journeys-calendar.png",
-          alt: "Student Calendar",
-          caption: "Interactive calendar for lesson scheduling",
-        },
-        {
-          src: "/images/musical-journeys-erd.png",
-          alt: "Database Entity Relationship Diagram",
-          caption:
-            "Comprehensive ERD showing the normalized database structure with 8 entities supporting multi-role authentication and business operations",
-        },
-        {
-          src: "/images/musical-journeys-owner.png",
-          alt: "Owner Dashboard",
-          caption: "Business owner management tools",
-        },
-      ],
-      completed: "December 2024",
-      teamSize: "5 developers",
-      role: "Full-Stack Developer",
-      keyFeatures: [
-        "Multi-role user authentication",
-        "Interactive calendar scheduling",
-        "Payment processing & tracking",
-        "Lesson notes management",
-        "Room rental system",
-        "Responsive design",
-      ],
-    },
-    {
-      title: "Portfolio Website - Documentation",
-      description:
-        "This portfolio website, built with Next.js, Tailwind CSS, and Framer Motion. It includes comprehensive technical documentation detailing its architecture, components, and development process.",
-      longDescription: [
-        "Architected and developed this personal portfolio website to showcase projects, skills, and professional experience.",
-        "Leveraged Next.js (App Router) for optimized routing, server components, and fast performance.",
-        "Styled using Tailwind CSS for a utility-first, responsive design system.",
-        "Incorporated Framer Motion for subtle and engaging animations and page transitions.",
-        "Authored detailed technical documentation covering project structure, key technologies, component-level breakdowns, styling, animations, and deployment.",
-        "Implemented features like a dynamic navigation bar, and an interactive contact form.",
-        "Ensured a modular and scalable codebase with reusable components and utility functions.",
-      ],
-      tags: [
-        "Next.js",
-        "React",
-        "TypeScript",
-        "Tailwind CSS",
-        "Framer Motion",
-        "Lucide Icons",
-        "Vercel",
-        "Technical Writing",
-      ],
-      role: "Full-Stack Developer",
-      completed: "June 2025",
-      teamSize: "1 Developer",
-      keyFeatures: [
-        "Responsive and Interactive UI/UX",
-        "Server-Side Rendering with Next.js",
-        "Utility-First Styling with Tailwind CSS",
-        "Smooth Animations via Framer Motion",
-        "Comprehensive Master Documentation",
-        "Guide for Adding New Pages/Animations",
-      ],
-      documents: [
-        {
-          title: "Portfolio Website Master Documentation",
-          fileName: "portfolio_master_documentation.pdf",
-          description:
-            "Complete reference guide including project structure, technologies, file breakdown, and component overview.",
-        },
-        {
-          title: "Guide to Adding New Pages and Animations",
-          fileName: "portfolio_add_pages_guide.pdf",
-          description: "Step-by-step instructions for extending the website with new content and animations.",
-        },
-      ],
-    },
-    {
-      title: "Job Postings - Data Analysis",
-      description:
-        "Analyzed a dataset of job postings and applicant submissions using Pandas for structured data manipulation and NLTK for natural language processing.",
-      longDescription: [
-        "Analyzed a dataset of job postings and applicant submissions using Pandas for structured data manipulation and NLTK for natural language processing.",
-        "Extracted job title frequency, filtered engineering/science roles, and mapped company-to-job listings.",
-        "Cleaned unstructured applicant skillsets using string preprocessing and tokenization techniques.",
-        "Visualized skill distribution using frequency plots; created custom visualizations of sentiment scores from real cover letters.",
-        "Applied NLTK SentimentIntensityAnalyzer to compare tone across applicant cover letters.",
-        "Delivered results in a polished Jupyter Notebook with clear markdown annotations and custom plots.",
-      ],
-      tags: ["Pandas", "NLTK", "Python", "Data Analysis", "Data Visualization"],
-      role: "Data Analyst",
-      completed: "April 2025",
-      teamSize: "1 Developer",
-      keyFeatures: [
-        "Pandas Data Manipulation",
-        "NLTK for Natural Language Processing",
-        "Data Cleaning and Preprocessing",
-        "Data Visualization with Matplotlib and Seaborn",
-        "Sentiment Analysis",
-        "Jupyter Notebook Documentation",
-      ],
-      documents: [
-        {
-          title: "Job Postings Data Analysis - Jupyter Notebook",
-          fileName: "NLTKPandas_JosiahXayavong.html",
-          description:
-            "Complete reference guide including project structure, technologies, file breakdown, and component overview.",
-        },
-        {
-          title: "Job Applications CSV",
-          fileName: "job_apps.csv",
-          description: "CSV file containing the raw data used for the analysis.",
-        },
-      ],
-    },
-  ]
+  {
+    title: "Musical Journeys - Scheduling and Management Platform",
+    description:
+      "A comprehensive music lesson scheduling and management platform built for a local music school. Features multi-role authentication, calendar integration, payment tracking, and lesson notes management for students, instructors, and business owners.",
+    longDescription: [
+      "Developed a full-stack web application to streamline music lesson scheduling and business operations",
+      "Designed and implemented a normalized relational database with 8 interconnected entities supporting multi-role user management",
+      "Built interactive calendar system for lesson scheduling and availability management",
+      "Created comprehensive payment tracking and lesson notes system with proper foreign key relationships",
+      "Implemented role-based authentication system supporting parents, students, renters, and business owners through a centralized credential system",
+      "Integrated room rental functionality with pricing calculations and duration tracking",
+      "Designed responsive UI with consistent branding and user-friendly forms",
+    ],
+    tags: ["ASP.NET Core", "C#", "SQL Server", "HTML", "CSS", "JavaScript"],
+    images: [
+      {
+        src: "/images/musical-journeys-homepage.png",
+        alt: "Musical Journeys Homepage",
+        caption: "Welcome page with branding and navigation",
+      },
+      {
+        src: "/images/musical-journeys-login.png",
+        alt: "Login System",
+        caption: "Secure authentication system with custom password hashing for enhanced backend security",
+      },
+      {
+        src: "/images/musical-journeys-lesson-signup.png",
+        alt: "Lesson Sign-up Form",
+        caption: "Comprehensive lesson booking system",
+      },
+      {
+        src: "/images/musical-journeys-calendar.png",
+        alt: "Student Calendar",
+        caption: "Interactive calendar for lesson scheduling",
+      },
+      {
+        src: "/images/musical-journeys-erd.png",
+        alt: "Database Entity Relationship Diagram",
+        caption:
+          "Comprehensive ERD showing the normalized database structure with 8 entities supporting multi-role authentication and business operations",
+      },
+      {
+        src: "/images/musical-journeys-owner.png",
+        alt: "Owner Dashboard",
+        caption: "Business owner management tools",
+      },
+    ],
+    completed: "December 2024",
+    teamSize: "5 developers",
+    role: "Full-Stack Developer",
+    keyFeatures: [
+      "Multi-role user authentication",
+      "Interactive calendar scheduling",
+      "Payment processing & tracking",
+      "Lesson notes management",
+      "Room rental system",
+      "Responsive design",
+    ],
+  },
+  {
+    title: "Portfolio Website - Documentation",
+    description:
+      "This portfolio website, built with Next.js, Tailwind CSS, and Framer Motion. It includes comprehensive technical documentation detailing its architecture, components, and development process.",
+    longDescription: [
+      "Architected and developed this personal portfolio website to showcase projects, skills, and professional experience.",
+      "Leveraged Next.js (App Router) for optimized routing, server components, and fast performance.",
+      "Styled using Tailwind CSS for a utility-first, responsive design system.",
+      "Incorporated Framer Motion for subtle and engaging animations and page transitions.",
+      "Authored detailed technical documentation covering project structure, key technologies, component-level breakdowns, styling, animations, and deployment.",
+      "Implemented features like a dynamic navigation bar, and an interactive contact form.",
+      "Ensured a modular and scalable codebase with reusable components and utility functions.",
+    ],
+    tags: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Lucide Icons",
+      "Vercel",
+      "Technical Writing",
+    ],
+    role: "Full-Stack Developer",
+    completed: "June 2025",
+    teamSize: "1 Developer",
+    keyFeatures: [
+      "Responsive and Interactive UI/UX",
+      "Server-Side Rendering with Next.js",
+      "Utility-First Styling with Tailwind CSS",
+      "Smooth Animations via Framer Motion",
+      "Comprehensive Master Documentation",
+      "Guide for Adding New Pages/Animations",
+    ],
+    documents: [
+      {
+        title: "Portfolio Website Master Documentation",
+        fileName: "portfolio_master_documentation.pdf",
+        description:
+          "Complete reference guide including project structure, technologies, file breakdown, and component overview.",
+      },
+      {
+        title: "Guide to Adding New Pages and Animations",
+        fileName: "portfolio_add_pages_guide.pdf",
+        description: "Step-by-step instructions for extending the website with new content and animations.",
+      },
+    ],
+  },
+  {
+    title: "University Crime - Data Analysis",
+    description:
+      "A data analysis project involving the design of a relational database, creation of an ETL pipeline, and development of Power BI dashboards to visualize FBI-reported crime data from over 800 universities.",
+    longDescription: [
+      "Designed and implemented a relational database in SQL Server to store and analyze FBI-reported crime data across 800+ universities from 2017 to 2019.",
+      "Built a complete ETL pipeline to extract raw data from CSVs, clean and transform inconsistent values, and load into a normalized schema.",
+      "Created Entity Relationship Diagrams (ERDs) to support schema design and enforce referential integrity between state, university, and crime statistics tables.",
+      "Applied data cleansing techniques using SQL scripting and logic to resolve nulls and formatting errors from source files.",
+      "Developed interactive Power BI dashboards to visualize trends by crime type, location, and year, enabling data-driven decision-making and insights generation.",
+    ],
+    tags: ["SQL Server", "Power BI", "ETL", "Data Modeling", "Data Cleansing", "Dashboarding"],
+    images: [
+      {
+        src: "/images/fbi-database-erd-clean.png",
+        alt: "Conceptual ERD for FBI Crime Data",
+        caption:
+          "Initial conceptual Entity Relationship Diagram outlining the basic table structures and relationships.",
+      },
+      {
+        src: "/images/fbi-database-erd.png",
+        alt: "Final SQL Server Database Diagram",
+        caption:
+          "The final database diagram as implemented in SQL Server, showing refined table schemas and enforced relationships.",
+      },
+      {
+        src: "/images/fbi-dashboard-trends-by-school.png",
+        alt: "Power BI Dashboard - Crime Trends by School",
+        caption:
+          "Line charts showing violent and property crime trends for a selected university (James Madison University) from 2017-2019.",
+      },
+      {
+        src: "/images/fbi-dashboard-crime-by-state.png",
+        alt: "Power BI Dashboard - Crime per Capita by State",
+        caption: "Bar charts comparing violent and property crimes per capita across different states and years.",
+      },
+      {
+        src: "/images/fbi-dashboard-violent-crime-breakdown.png",
+        alt: "Power BI Dashboard - Violent Crime Breakdown",
+        caption:
+          "Pie chart illustrating the proportion of different violent crimes (Murder, Rape, Robbery, Aggravated Assault).",
+      },
+      {
+        src: "/images/fbi-dashboard-property-crime-breakdown.png",
+        alt: "Power BI Dashboard - Property Crime Breakdown",
+        caption:
+          "Pie chart illustrating the proportion of different property crimes (Burglary, Larceny, Motor Theft, Arson).",
+      },
+    ],
+    documents: [
+      {
+        title: "ETL & Data Cleansing SQL Script",
+        fileName: "fbi-crime-data-etl.sql",
+        description:
+          "The complete SQL script for the ETL process, including raw data ingestion, data cleansing with cursors, and populating the final normalized database.",
+      },
+    ],
+    completed: "May 2025",
+    teamSize: "3 developers",
+    role: "Data Engineer & Analyst",
+    keyFeatures: [
+      "Relational Database Design",
+      "Full ETL Pipeline Implementation",
+      "Advanced Data Cleansing & Normalization",
+      "Interactive Power BI Dashboards",
+      "Entity Relationship Diagram (ERD) Modeling",
+      "SQL Scripting for Data Transformation",
+    ],
+  },
+  {
+    title: "Job Postings - Data Analysis",
+    description:
+      "Analyzed a dataset of job postings and applicant submissions using Pandas for structured data manipulation and NLTK for natural language processing.",
+    longDescription: [
+      "Analyzed a dataset of job postings and applicant submissions using Pandas for structured data manipulation and NLTK for natural language processing.",
+      "Extracted job title frequency, filtered engineering/science roles, and mapped company-to-job listings.",
+      "Cleaned unstructured applicant skillsets using string preprocessing and tokenization techniques.",
+      "Visualized skill distribution using frequency plots; created custom visualizations of sentiment scores from real cover letters.",
+      "Applied NLTK SentimentIntensityAnalyzer to compare tone across applicant cover letters.",
+      "Delivered results in a polished Jupyter Notebook with clear markdown annotations and custom plots.",
+    ],
+    tags: ["Pandas", "NLTK", "Python", "Data Analysis", "Data Visualization"],
+    role: "Data Analyst",
+    completed: "April 2025",
+    teamSize: "1 Developer",
+    keyFeatures: [
+      "Pandas Data Manipulation",
+      "NLTK for Natural Language Processing",
+      "Data Cleaning and Preprocessing",
+      "Data Visualization with Matplotlib and Seaborn",
+      "Sentiment Analysis",
+      "Jupyter Notebook Documentation",
+    ],
+    documents: [
+      {
+        title: "Job Postings Data Analysis - Jupyter Notebook",
+        fileName: "NLTKPandas_JosiahXayavong.html",
+        description:
+          "Complete reference guide including project structure, technologies, file breakdown, and component overview.",
+      },
+      {
+        title: "Job Applications CSV",
+        fileName: "job_apps.csv",
+        description: "CSV file containing the raw data used for the analysis.",
+      },
+    ],
+  },
+]
 
   const renderProjectAccordionContent = (project: Project) => (
     <div className="space-y-8 pt-4">
